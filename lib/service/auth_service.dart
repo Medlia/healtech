@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/auth/email_verification.dart';
 import 'package:healtech/widgets/error_dialog.dart';
 
 class AuthService {
@@ -21,9 +22,12 @@ class AuthService {
         },
       );
       if (!context.mounted) return;
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home',
-        (route) => false,
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => EmailVerify(
+            email: email,
+          ),
+        ),
       );
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) return;
@@ -62,7 +66,7 @@ class AuthService {
     }
   }
 
-  static Future<void> login(
+  static Future<void> signin(
       BuildContext context, String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -102,5 +106,30 @@ class AuthService {
         "Try signing in again",
       );
     }
+  }
+
+  static Future<void> emailVerification(BuildContext context) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      await user!.sendEmailVerification();
+    } catch (e) {
+      if (!context.mounted) return;
+      showErrorDialog(
+        context,
+        "Something went wrong",
+        e.toString(),
+      );
+    }
+  }
+
+  static Future<void> forgetPassword() async {}
+
+  static Future<void> signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    if (!context.mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      '/signin',
+      (route) => false,
+    );
   }
 }

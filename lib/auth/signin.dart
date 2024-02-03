@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class Signin extends StatefulWidget {
+  const Signin({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<Signin> createState() => _SigninState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SigninState extends State<Signin> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -37,7 +37,7 @@ class _SignUpState extends State<SignUp> {
             top: 16,
           ),
           child: Text(
-            "Sign up",
+            "Sign in",
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
               fontWeight: FontWeight.w600,
@@ -55,7 +55,7 @@ class _SignUpState extends State<SignUp> {
               children: [
                 const Spacer(),
                 Text(
-                  "Create your account",
+                  "Welcome back!",
                   style: TextStyle(
                     fontSize:
                         Theme.of(context).textTheme.displaySmall?.fontSize,
@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "Enter your email and password to sign up",
+                  "Enter your email and password to sign in",
                   style: TextStyle(
                     fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
                     fontWeight: FontWeight.w400,
@@ -76,6 +76,7 @@ class _SignUpState extends State<SignUp> {
                   icon: const Icon(Icons.email),
                   type: TextInputType.emailAddress,
                   enableSuggestions: false,
+                  obscureText: false,
                   labelText: 'Email',
                   autoCorrect: false,
                 ),
@@ -95,14 +96,14 @@ class _SignUpState extends State<SignUp> {
                   width: 200,
                   child: FilledButton(
                     onPressed: () async {
-                      await AuthService.signup(
+                      await AuthService.signin(
                         context,
                         _email.text,
                         _password.text,
                       );
                     },
                     child: const Text(
-                      "Sign up",
+                      "Sign in",
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -113,12 +114,27 @@ class _SignUpState extends State<SignUp> {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/signin',
+                      '/signup',
                       (route) => false,
                     );
                   },
                   child: const Text(
-                    "Already have an account? Sign in here!",
+                    "Don't have an account? Signup here!",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/forgetpassword',
+                      (route) => false,
+                    );
+                  },
+                  child: const Text(
+                    "Forgot password? Reset here!",
                     style: TextStyle(
                       fontSize: 14,
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:healtech/auth/signup.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Content {
@@ -40,12 +39,12 @@ final List<Content> content = [
 
 class OnBoardingContent extends StatelessWidget {
   final String title;
-  final String description;
+  final String? description;
   final String image;
   const OnBoardingContent({
     Key? key,
     required this.title,
-    required this.description,
+    this.description,
     required this.image,
   }) : super(key: key);
 
@@ -64,7 +63,7 @@ class OnBoardingContent extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            description,
+            description ?? "",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
@@ -103,22 +102,25 @@ class DotIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Spacer(),
-          TextButton(
+          ElevatedButton(
             onPressed: () {
-              onComplete;
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const SignUp(),
-                ),
+              _page.previousPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
               );
             },
-            child: const Text("Skip"),
+            child: const Text(
+              "Back",
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
           ),
           const Spacer(),
           Center(
             child: SmoothPageIndicator(
               controller: _page,
-              count: 4,
+              count: 5,
               effect: WormEffect(
                 dotHeight: 10,
                 dotWidth: 10,
@@ -134,7 +136,7 @@ class DotIndicator extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          TextButton(
+          FilledButton(
             onPressed: () {
               _page.nextPage(
                 duration: const Duration(
@@ -143,7 +145,12 @@ class DotIndicator extends StatelessWidget {
                 curve: Curves.easeInOut,
               );
             },
-            child: const Text("Next"),
+            child: const Text(
+              "Next",
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
           ),
           const Spacer(),
         ],

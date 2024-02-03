@@ -79,6 +79,41 @@ class OnBoardingState extends State<OnBoarding> {
                 description: content[3].description,
                 image: content[3].image,
               ),
+              Column(
+                children: [
+                  const Spacer(),
+                  Text(
+                    "HealTech",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize:
+                          Theme.of(context).textTheme.displaySmall?.fontSize,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Image.asset(
+                    'assets/onboard_logo.png',
+                    height: 200,
+                    width: 200,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      completeOnboarding;
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/signup',
+                        (route) => false,
+                      );
+                    },
+                    child: const Text(
+                      "Get Started",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ],
           ),
         ),

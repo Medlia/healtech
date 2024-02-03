@@ -31,8 +31,7 @@ class CustomTextField extends StatelessWidget {
         autocorrect: autoCorrect,
         decoration: InputDecoration(
           labelText: labelText,
-          labelStyle: TextStyle(
-            color: Theme.of(context).colorScheme.inverseSurface,
+          labelStyle: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
           ),

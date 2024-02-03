@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healtech/auth/login.dart';
+import 'package:healtech/auth/email_verification.dart';
+import 'package:healtech/auth/forget_password.dart';
+import 'package:healtech/auth/signin.dart';
 import 'package:healtech/auth/onboarding.dart';
 import 'package:healtech/auth/signup.dart';
 import 'package:healtech/firebase_options.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       themeMode: ThemeMode.dark,
       theme: ThemeData(
-        fontFamily: GoogleFonts.outfit().fontFamily,
+        fontFamily: GoogleFonts.poppins().fontFamily,
         colorScheme: ColorScheme.fromSeed(
           brightness: Brightness.dark,
           seedColor: Colors.deepPurple,
@@ -32,8 +34,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/login': (context) => const Login(),
+        '/signin': (context) => const Signin(),
         '/signup': (context) => const SignUp(),
+        '/verify': (context) => const EmailVerify(
+              email: '',
+            ),
+        '/forgetpassword': (context) => const ForgetPassword(),
         '/home': (context) => const Home(),
       },
       home: const OnBoarding(),
