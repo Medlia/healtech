@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "291602182792",
+    "project_id": "healtech-c75b3",
+    "storage_bucket": "healtech-c75b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291602182792:android:ccdf2d4b06b39a88c7653d",
+        "android_client_info": {
+          "package_name": "com.example.healtech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA61b8gPtt2ByBrCRe3LvEeAXe_44wgnIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
