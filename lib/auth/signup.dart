@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
-import 'package:healtech/widgets/error_dialog.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -72,7 +70,11 @@ class _SignUpState extends State<SignUp> {
                 width: 200,
                 child: FilledButton(
                   onPressed: () async {
-                    await _signup();
+                    await AuthService.signup(
+                      context,
+                      _email.text,
+                      _password.text,
+                    );
                   },
                   child: const Text("Sign up"),
                 ),
@@ -92,62 +94,5 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
-  }
-
-  Future<void> _signup() async {
-    try {
-      UserCredential userCred =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _email.text,
-        password: _password.text,
-      );
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCred.user?.uid)
-          .set(
-        {
-          'email': _email.text,
-        },
-      );
-      if (!context.mounted) return;
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home',
-        (route) => false,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (!context.mounted) return;
-      if (e.code == 'invalid-email') {
-        showErrorDialog(
-          context,
-          "Invalid email",
-          "Enter a valid email address",
-        );
-      } else if (e.code == 'weak-password') {
-        showErrorDialog(
-          context,
-          "Weak password",
-          "Enter a password with more than 6 characters",
-        );
-      } else if (e.code == 'email-already-in-use') {
-        showErrorDialog(
-          context,
-          "Email already in use",
-          "Proceed to sign in using this email",
-        );
-      } else {
-        showErrorDialog(
-          context,
-          "An exception occurred",
-          e.toString(),
-        );
-      }
-    } catch (e) {
-      if (!context.mounted) return;
-      showErrorDialog(
-        context,
-        "An exception occurred",
-        e.toString(),
-      );
-    }
   }
 }

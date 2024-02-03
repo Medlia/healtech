@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
       height: 60,
       child: TextField(
         controller: controller,
-        obscureText: false,
+        obscureText: obscureText ?? false,
         enableSuggestions: enableSuggestions,
         keyboardType: type,
         autocorrect: autoCorrect,

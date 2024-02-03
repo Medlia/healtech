@@ -10,6 +10,6 @@ class AppointmentScheduler extends StatefulWidget {
 class _AppointmentSchedulerState extends State<AppointmentScheduler> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold();
   }
 }

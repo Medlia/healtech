@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int selectedIndex = 0;
   final List<Widget> screens = <Widget>[
     const UploadReport(),
     const ReportAnalysis(),
@@ -20,10 +21,56 @@ class _HomeState extends State<Home> {
     const AppointmentScheduler(),
     const Profile(),
   ];
+
+  void onTap(int index) {
+    return setState(
+      () {
+        selectedIndex = index;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(destinations: screens),
+      body: screens[selectedIndex],
+      bottomNavigationBar: NavigationBar(
+        elevation: 80,
+        height: 80,
+        indicatorShape: const CircleBorder(
+          eccentricity: 0.6,
+        ),
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: selectedIndex,
+        onDestinationSelected: onTap,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.medical_information_outlined),
+            selectedIcon: Icon(Icons.medical_information),
+            label: "Report",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.analytics_outlined),
+            selectedIcon: Icon(Icons.analytics),
+            label: "Analysis",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.medication_outlined),
+            selectedIcon: Icon(Icons.medication),
+            label: "Medicines",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.calendar_month_outlined),
+            selectedIcon: Icon(Icons.calendar_month),
+            label: "Appointments",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+      ),
     );
   }
 }
