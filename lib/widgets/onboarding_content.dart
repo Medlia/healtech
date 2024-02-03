@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:healtech/auth/login.dart';
+import 'package:healtech/auth/signup.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Content {
@@ -61,7 +60,6 @@ class OnBoardingContent extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.displaySmall?.fontSize,
-              fontFamily: GoogleFonts.outfit().toString(),
             ),
           ),
           const SizedBox(height: 4),
@@ -71,7 +69,6 @@ class OnBoardingContent extends StatelessWidget {
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
               fontWeight: FontWeight.w400,
-              fontFamily: GoogleFonts.outfit().toString(),
             ),
           ),
           const SizedBox(height: 40),
@@ -91,9 +88,11 @@ class DotIndicator extends StatelessWidget {
   const DotIndicator({
     super.key,
     required PageController page,
+    required this.onComplete,
   }) : _page = page;
 
   final PageController _page;
+  final VoidCallback onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -106,9 +105,10 @@ class DotIndicator extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: () {
+              onComplete;
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => const Login(),
+                  builder: (context) => const SignUp(),
                 ),
               );
             },

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healtech/auth/login.dart';
 import 'package:healtech/auth/onboarding.dart';
 import 'package:healtech/auth/signup.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       themeMode: ThemeMode.dark,
       theme: ThemeData(
+        fontFamily: GoogleFonts.outfit().fontFamily,
         colorScheme: ColorScheme.fromSeed(
           brightness: Brightness.dark,
           seedColor: Colors.deepPurple,

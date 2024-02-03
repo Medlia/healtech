@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -36,7 +35,6 @@ class CustomTextField extends StatelessWidget {
             color: Theme.of(context).colorScheme.inverseSurface,
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            fontFamily: GoogleFonts.outfit().toString(),
           ),
           icon: icon,
           border: OutlineInputBorder(
