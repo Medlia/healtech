@@ -56,7 +56,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   style: TextStyle(
                     fontSize:
                         Theme.of(context).textTheme.displaySmall?.fontSize,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 4),

@@ -29,6 +29,7 @@ class _ProfileState extends State<Profile> {
       ),
       body: SafeArea(
         child: Container(
+           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(16),
           child: Center(
             child: Column(

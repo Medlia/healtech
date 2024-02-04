@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 
-class DetailCard extends StatelessWidget {
+class DetailCard extends StatefulWidget {
   final TextEditingController _controller;
+  final TextInputType type;
   final String detail;
   const DetailCard({
     super.key,
     required TextEditingController controller,
     required this.detail,
+    required this.type,
   }) : _controller = controller;
 
   @override
+  State<DetailCard> createState() => _DetailCardState();
+}
+
+class _DetailCardState extends State<DetailCard> {
+  @override
   Widget build(BuildContext context) {
+    final InputBorder border = UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        width: 2,
+      ),
+    );
     return SizedBox(
       height: 70,
       width: double.infinity,
@@ -26,28 +39,27 @@ class DetailCard extends StatelessWidget {
             const Spacer(),
             SizedBox(
               height: 58,
-              width: 54,
+              width: 100,
               child: TextField(
-                controller: _controller,
-                keyboardType: TextInputType.text,
+                controller: widget._controller,
+                keyboardType: widget.type,
                 textAlign: TextAlign.center,
                 autocorrect: false,
                 enableSuggestions: false,
+                cursorColor: Theme.of(context).colorScheme.primaryContainer,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      style: BorderStyle.solid,
-                      width: 2,
-                    ),
-                  ),
+                  border: border,
+                  enabledBorder: border,
+                  focusedBorder: border,
                 ),
               ),
             ),
             const Spacer(),
             Text(
-              detail,
+              widget.detail,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSecondary,
                 fontSize: 16,
