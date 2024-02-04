@@ -84,14 +84,11 @@ class OnBoardingContent extends StatelessWidget {
 }
 
 class DotIndicator extends StatelessWidget {
+  final PageController _page;
   const DotIndicator({
     super.key,
     required PageController page,
-    required this.onComplete,
   }) : _page = page;
-
-  final PageController _page;
-  final VoidCallback onComplete;
 
   @override
   Widget build(BuildContext context) {

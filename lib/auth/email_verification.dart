@@ -72,7 +72,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                       if (user.emailVerified) {
                         if (!context.mounted) return;
                         Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/home',
+                          '/navbar',
                           (route) => false,
                         );
                       } else {

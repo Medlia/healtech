@@ -75,7 +75,7 @@ class AuthService {
       );
       if (!context.mounted) return;
       Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home',
+        '/navbar',
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -122,7 +122,41 @@ class AuthService {
     }
   }
 
-  static Future<void> forgetPassword() async {}
+  static Future<void> forgetPassword(BuildContext context, String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (!context.mounted) return;
+      if (e.code == 'user-not-found') {
+        showErrorDialog(
+          context,
+          "User not found",
+          "Sign up to create your account",
+        );
+      } else if (e.code == 'invalid-email') {
+        showErrorDialog(
+          context,
+          "Invalid email",
+          "Enter a valid email address",
+        );
+      } else {
+        showErrorDialog(
+          context,
+          "Something went wrong",
+          e.toString(),
+        );
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      showErrorDialog(
+        context,
+        "Something went wrong",
+        e.toString(),
+      );
+    }
+  }
 
   static Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();

@@ -7,7 +7,7 @@ import 'package:healtech/auth/signin.dart';
 import 'package:healtech/auth/onboarding.dart';
 import 'package:healtech/auth/signup.dart';
 import 'package:healtech/firebase_options.dart';
-import 'package:healtech/home/home.dart';
+import 'package:healtech/navbar/navbar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
               email: '',
             ),
         '/forgetpassword': (context) => const ForgetPassword(),
-        '/home': (context) => const Home(),
+        '/navbar': (context) => const NavBar(),
       },
       home: const OnBoarding(),
     );

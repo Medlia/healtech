@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healtech/auth/signup.dart';
+import 'package:healtech/auth/user_details.dart';
 import 'package:healtech/widgets/onboarding_content.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,24 +18,6 @@ class OnBoardingState extends State<OnBoarding> {
   void initState() {
     _page = PageController();
     super.initState();
-    checkOnboardingStatus();
-  }
-
-  checkOnboardingStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
-    if (onboardingCompleted) {
-      navigateToSignupScreen();
-    }
-  }
-
-  navigateToSignupScreen() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SignUp(),
-      ),
-    );
   }
 
   @override
@@ -44,84 +26,101 @@ class OnBoardingState extends State<OnBoarding> {
     super.dispose();
   }
 
-  completeOnboarding() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboardingCompleted', true);
-    navigateToSignupScreen();
+  Future<bool> onBoardingShown() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isOnBoardingShown') ?? false;
+  }
+
+  void _onIntroEnd(context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isOnBoardingShown', true);
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => const UserDetails(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: PageView(
-            controller: _page,
-            children: [
-              OnBoardingContent(
-                title: content[0].title,
-                description: content[0].description,
-                image: content[0].image,
-              ),
-              OnBoardingContent(
-                title: content[1].title,
-                description: content[1].description,
-                image: content[1].image,
-              ),
-              OnBoardingContent(
-                title: content[2].title,
-                description: content[2].description,
-                image: content[2].image,
-              ),
-              OnBoardingContent(
-                title: content[3].title,
-                description: content[3].description,
-                image: content[3].image,
-              ),
-              Column(
-                children: [
-                  const Spacer(),
-                  Text(
-                    "HealTech",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.displaySmall?.fontSize,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  Image.asset(
-                    'assets/onboard_logo.png',
-                    height: 200,
-                    width: 200,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      completeOnboarding;
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/signup',
-                        (route) => false,
-                      );
-                    },
-                    child: const Text(
-                      "Get Started",
-                      style: TextStyle(
-                        fontSize: 20,
+    return FutureBuilder(
+      future: onBoardingShown(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else {
+          final bool onBoardingShown = snapshot.data ?? false;
+          return onBoardingShown
+              ? const UserDetails()
+              : Scaffold(
+                  body: SafeArea(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      child: PageView(
+                        controller: _page,
+                        children: [
+                          OnBoardingContent(
+                            title: content[0].title,
+                            description: content[0].description,
+                            image: content[0].image,
+                          ),
+                          OnBoardingContent(
+                            title: content[1].title,
+                            description: content[1].description,
+                            image: content[1].image,
+                          ),
+                          OnBoardingContent(
+                            title: content[2].title,
+                            description: content[2].description,
+                            image: content[2].image,
+                          ),
+                          OnBoardingContent(
+                            title: content[3].title,
+                            description: content[3].description,
+                            image: content[3].image,
+                          ),
+                          Column(
+                            children: [
+                              const Spacer(),
+                              Text(
+                                "HealTech",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.fontSize,
+                                ),
+                              ),
+                              const SizedBox(height: 40),
+                              Image.asset(
+                                'assets/onboard_logo.png',
+                                height: 200,
+                                width: 200,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  _onIntroEnd(context);
+                                },
+                                child: const Text(
+                                  "Get Started",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  const Spacer(),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomSheet: DotIndicator(
-        page: _page,
-        onComplete: completeOnboarding,
-      ),
+                  bottomSheet: DotIndicator(page: _page),
+                );
+        }
+      },
     );
   }
 }

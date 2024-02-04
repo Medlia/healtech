@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class ReportAnalysis extends StatefulWidget {
+  const ReportAnalysis({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<ReportAnalysis> createState() => _ReportAnalysisState();
 }
 
-class _HomeState extends State<Home> {
+class _ReportAnalysisState extends State<ReportAnalysis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
             top: 16,
           ),
           child: Text(
-            "Home",
+            "Report Analysis",
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
               fontWeight: FontWeight.w600,
