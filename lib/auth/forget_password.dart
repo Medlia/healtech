@@ -30,8 +30,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
-            left: 16,
-            top: 16,
+            top: 8,
           ),
           child: Text(
             "Forget Password",
@@ -44,7 +43,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

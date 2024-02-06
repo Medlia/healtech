@@ -27,47 +27,52 @@ class _DetailCardState extends State<DetailCard> {
     return SizedBox(
       height: 70,
       width: double.infinity,
-      child: Card(
-        color: Theme.of(context).colorScheme.secondary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[800]?.withOpacity(0.1),
+          backgroundBlendMode: BlendMode.overlay,
         ),
-        child: Row(
-          children: [
-            const Spacer(),
-            SizedBox(
-              height: 58,
-              width: 100,
-              child: TextField(
-                controller: widget._controller,
-                keyboardType: widget.type,
-                textAlign: TextAlign.center,
-                autocorrect: false,
-                enableSuggestions: false,
-                cursorColor: Theme.of(context).colorScheme.primaryContainer,
+        child: Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          child: Row(
+            children: [
+              const Spacer(),
+              SizedBox(
+                height: 58,
+                width: 100,
+                child: TextField(
+                  controller: widget._controller,
+                  keyboardType: widget.type,
+                  textAlign: TextAlign.center,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  cursorColor: Theme.of(context).colorScheme.primaryContainer,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                  decoration: InputDecoration(
+                    border: border,
+                    enabledBorder: border,
+                    focusedBorder: border,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                widget.detail,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSecondary,
-                ),
-                decoration: InputDecoration(
-                  border: border,
-                  enabledBorder: border,
-                  focusedBorder: border,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-            ),
-            const Spacer(),
-            Text(
-              widget.detail,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondary,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const Spacer(),
-          ],
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

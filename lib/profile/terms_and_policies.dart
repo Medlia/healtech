@@ -9,8 +9,7 @@ class TermsAndPolicies extends StatelessWidget {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
-            left: 16,
-            top: 16,
+            top: 8,
           ),
           child: Text(
             "Terms and Policies",
@@ -24,7 +23,7 @@ class TermsAndPolicies extends StatelessWidget {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

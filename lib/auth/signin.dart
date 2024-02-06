@@ -40,8 +40,7 @@ class _SigninState extends State<Signin> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
-            left: 16,
-            top: 16,
+            top: 8,
           ),
           child: Text(
             "Sign in",
@@ -54,7 +53,7 @@ class _SigninState extends State<Signin> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

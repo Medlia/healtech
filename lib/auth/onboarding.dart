@@ -57,7 +57,7 @@ class OnBoardingState extends State<OnBoarding> {
                   body: SafeArea(
                     child: Container(
                       height: MediaQuery.of(context).size.height,
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
                       child: PageView(
                         controller: _page,
                         children: [

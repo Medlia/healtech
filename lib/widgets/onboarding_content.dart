@@ -93,7 +93,7 @@ class DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(8),
       height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -75,8 +75,7 @@ class _UserDetailsState extends State<UserDetails> {
                   appBar: AppBar(
                     title: Padding(
                       padding: const EdgeInsets.only(
-                        left: 16,
-                        top: 16,
+                        top: 8,
                       ),
                       child: Text(
                         "Details",
@@ -94,7 +93,7 @@ class _UserDetailsState extends State<UserDetails> {
                     child: SingleChildScrollView(
                       child: Container(
                         height: MediaQuery.of(context).size.height,
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(8),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

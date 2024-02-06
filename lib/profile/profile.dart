@@ -60,8 +60,7 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
-            left: 16,
-            top: 16,
+            top: 8,
           ),
           child: Text(
             "Profile",
@@ -88,7 +87,7 @@ class _ProfileState extends State<Profile> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           margin: const EdgeInsets.only(bottom: 20),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -139,7 +138,7 @@ class _ProfileState extends State<Profile> {
                         width: double.infinity,
                         child: Card(
                           child: Container(
-                            padding: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
                               children: [
                                 const Text(
@@ -164,7 +163,7 @@ class _ProfileState extends State<Profile> {
                               width: double.infinity / 2,
                               child: Card(
                                 child: Container(
-                                  padding: const EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -190,7 +189,7 @@ class _ProfileState extends State<Profile> {
                               width: double.infinity / 2,
                               child: Card(
                                 child: Container(
-                                  padding: const EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

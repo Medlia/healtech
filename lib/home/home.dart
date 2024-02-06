@@ -14,8 +14,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
-            left: 16,
-            top: 16,
+            top: 8,
           ),
           child: Text(
             "Home",

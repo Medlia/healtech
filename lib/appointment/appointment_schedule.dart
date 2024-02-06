@@ -14,8 +14,7 @@ class _AppointmentState extends State<Appointment> {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
-            left: 16,
-            top: 16,
+            top: 8,
           ),
           child: Text(
             "Appointments",
