@@ -103,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                             const SizedBox(height: 30),
                             CustomTextField(
                               controller: _email,
-                              icon: const Icon(Icons.email),
+                              icon: const Icon(Icons.email_rounded),
                               type: TextInputType.emailAddress,
                               enableSuggestions: false,
                               labelText: 'Email',
@@ -112,7 +112,7 @@ class _SignUpState extends State<SignUp> {
                             const SizedBox(height: 20),
                             CustomTextField(
                               controller: _password,
-                              icon: const Icon(Icons.lock),
+                              icon: const Icon(Icons.lock_rounded),
                               type: TextInputType.text,
                               enableSuggestions: false,
                               obscureText: true,
@@ -121,7 +121,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             const SizedBox(height: 20),
                             SizedBox(
-                              height: 50,
+                              height: 45,
                               width: 200,
                               child: FilledButton(
                                 onPressed: () async {

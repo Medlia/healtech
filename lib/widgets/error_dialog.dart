@@ -12,7 +12,7 @@ void showErrorDialog(
         title: Text(title),
         content: Text(content),
         icon: const Center(
-          child: Icon(Icons.info),
+          child: Icon(Icons.info_rounded),
         ),
         actions: [
           TextButton(

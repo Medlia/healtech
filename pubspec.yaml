@@ -43,6 +43,7 @@ dependencies:
   dots_indicator: ^2.1.2
   shared_preferences: ^2.2.2
   smooth_page_indicator: ^1.1.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

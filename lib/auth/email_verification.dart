@@ -90,7 +90,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                             ),
                             const SizedBox(height: 10),
                             SizedBox(
-                              height: 50,
+                              height: 45,
                               width: 200,
                               child: FilledButton(
                                 onPressed: () async {

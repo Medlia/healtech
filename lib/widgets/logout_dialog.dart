@@ -10,7 +10,7 @@ Future<void> showLogOutDialog(BuildContext context) async {
         content: const Text(
             "Are you sure you want to log out? Logging out will require you to sign in again."),
         icon: const Center(
-          child: Icon(Icons.info),
+          child: Icon(Icons.info_rounded),
         ),
         actions: [
           FilledButton(

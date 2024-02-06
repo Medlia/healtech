@@ -71,7 +71,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 const SizedBox(height: 30),
                 CustomTextField(
                   controller: _email,
-                  icon: const Icon(Icons.email),
+                  icon: const Icon(Icons.email_rounded),
                   type: TextInputType.emailAddress,
                   enableSuggestions: false,
                   labelText: "Email",
@@ -79,7 +79,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
-                  height: 50,
+                  height: 45,
                   width: 200,
                   child: FilledButton(
                     onPressed: () async {

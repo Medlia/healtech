@@ -134,7 +134,7 @@ class _UserDetailsState extends State<UserDetails> {
                               ),
                               const SizedBox(height: 30),
                               SizedBox(
-                                height: 50,
+                                height: 45,
                                 width: 200,
                                 child: FilledButton(
                                   onPressed: () async {

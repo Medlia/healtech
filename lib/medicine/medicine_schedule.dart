@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Medicines extends StatefulWidget {
-  const Medicines({super.key});
+class MedicineSchedule extends StatefulWidget {
+  const MedicineSchedule({super.key});
 
   @override
-  State<Medicines> createState() => _MedicinesState();
+  State<MedicineSchedule> createState() => _MedicineScheduleState();
 }
 
-class _MedicinesState extends State<Medicines> {
+class _MedicineScheduleState extends State<MedicineSchedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _MedicinesState extends State<Medicines> {
             top: 16,
           ),
           child: Text(
-            "Medicine",
+            "Medicine Schedule",
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
               fontWeight: FontWeight.w600,

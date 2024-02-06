@@ -17,7 +17,7 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> screens = <Widget>[
     const Home(),
     const ReportAnalysis(),
-    const Medicines(),
+    const MedicineSchedule(),
     const Appointment(),
     const Profile(),
   ];
@@ -45,28 +45,58 @@ class _NavBarState extends State<NavBar> {
         onDestinationSelected: onTap,
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
+            icon: Icon(
+              Icons.home_outlined,
+              size: 28,
+            ),
+            selectedIcon: Icon(
+              Icons.home_rounded,
+              size: 34,
+            ),
             label: "Home",
           ),
           NavigationDestination(
-            icon: Icon(Icons.analytics_outlined),
-            selectedIcon: Icon(Icons.analytics_rounded),
+            icon: Icon(
+              Icons.analytics_outlined,
+              size: 28,
+            ),
+            selectedIcon: Icon(
+              Icons.analytics_rounded,
+              size: 34,
+            ),
             label: "Report Analysis",
           ),
           NavigationDestination(
-            icon: Icon(Icons.medication_outlined),
-            selectedIcon: Icon(Icons.medication_rounded),
+            icon: Icon(
+              Icons.medication_outlined,
+              size: 28,
+            ),
+            selectedIcon: Icon(
+              Icons.medication_rounded,
+              size: 34,
+            ),
             label: "Medicines",
           ),
           NavigationDestination(
-            icon: Icon(Icons.calendar_month_outlined),
-            selectedIcon: Icon(Icons.calendar_month_rounded),
+            icon: Icon(
+              Icons.calendar_month_outlined,
+              size: 28,
+            ),
+            selectedIcon: Icon(
+              Icons.calendar_month_rounded,
+              size: 34,
+            ),
             label: "Appointments",
           ),
           NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person_rounded),
+            icon: Icon(
+              Icons.person_outlined,
+              size: 28,
+            ),
+            selectedIcon: Icon(
+              Icons.person_rounded,
+              size: 34,
+            ),
             label: "Profile",
           ),
         ],
