@@ -167,13 +167,11 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                         );
                         var timeParts = medicineData['time'].split(' ');
                         var time = timeParts[0].split(':');
-                        var hour = time[0];
-                        var minutes = time[1];
                         if (_selectedDate.isBefore(duration) ||
                             _selectedDate.isAtSameMomentAs(duration)) {
                           MedicationService.scheduledNotification(
-                            int.parse(hour),
-                            int.parse(minutes),
+                            int.parse(time[0]),
+                            int.parse(time[1]),
                             medicineData,
                           );
                           return Dismissible(

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healtech/auth/email_verification.dart';
 import 'package:healtech/auth/forget_password.dart';
-import 'package:healtech/auth/onboarding.dart';
+// import 'package:healtech/auth/onboarding.dart';
 import 'package:healtech/auth/signin.dart';
 import 'package:healtech/auth/signup.dart';
+import 'package:healtech/chat/chat.dart';
 import 'package:healtech/firebase_options.dart';
 import 'package:healtech/medicine/medicine_schedule.dart';
 import 'package:healtech/navbar/navbar.dart';
@@ -43,9 +44,10 @@ class MyApp extends StatelessWidget {
             ),
         '/forgetpassword': (context) => const ForgetPassword(),
         '/navbar': (context) => const NavBar(),
-        '/medicineschedule':(context) => const MedicineSchedule(),
+        '/medicineschedule': (context) => const MedicineSchedule(),
+        '/chat': (context) => const Chat(),
       },
-      home: const OnBoarding(),
+      home: const NavBar(),
     );
   }
 }

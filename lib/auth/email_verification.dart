@@ -110,14 +110,14 @@ class _EmailVerifyState extends State<EmailVerify> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .onInverseSurface,
+                                      .colorScheme
+                                      .onInverseSurface,
                                         content: Text(
                                           "Verify email before proceeding",
                                           style: TextStyle(
                                             color: Theme.of(context)
-                                                .colorScheme
-                                                .inverseSurface,
+                                          .colorScheme
+                                          .inverseSurface,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),

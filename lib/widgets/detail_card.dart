@@ -20,7 +20,7 @@ class _DetailCardState extends State<DetailCard> {
   Widget build(BuildContext context) {
     final InputBorder border = UnderlineInputBorder(
       borderSide: BorderSide(
-        color: Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.primary,
         width: 2,
       ),
     );
@@ -50,9 +50,9 @@ class _DetailCardState extends State<DetailCard> {
                   textAlign: TextAlign.center,
                   autocorrect: false,
                   enableSuggestions: false,
-                  cursorColor: Theme.of(context).colorScheme.primaryContainer,
+                  cursorColor: Theme.of(context).colorScheme.primary,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   decoration: InputDecoration(
                     border: border,
@@ -64,8 +64,7 @@ class _DetailCardState extends State<DetailCard> {
               const Spacer(),
               Text(
                 widget.detail,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),

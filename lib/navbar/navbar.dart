@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healtech/analysis/report_analysis.dart';
 import 'package:healtech/appointment/appointment_schedule.dart';
+import 'package:healtech/chat/chat.dart';
 import 'package:healtech/home/home.dart';
 import 'package:healtech/medicine/medicine_schedule.dart';
 import 'package:healtech/profile/profile.dart';
@@ -48,6 +49,42 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const Chat(),
+            ),
+          );
+        },
+        child: Draggable(
+          feedback: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.bubble_chart_rounded,
+              size: 50,
+            ),
+          ),
+          child: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.bubble_chart_sharp,
+              size: 50,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       body: screens[selectedIndex],
       bottomNavigationBar: NavigationBar(
         elevation: 80,
