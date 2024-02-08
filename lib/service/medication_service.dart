@@ -4,12 +4,12 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:get/get.dart';
 
-class MedicineNotificationService {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+class MedicationService {
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  initializeNotification() async {
-    tz.initializeTimeZones();
+  static Future initializeNotification() async {
+    localTimeZone();
     AndroidInitializationSettings initializationSettingsAndroid =
         const AndroidInitializationSettings("appicon");
 
@@ -24,13 +24,13 @@ class MedicineNotificationService {
     );
   }
 
-  Future didReceiveNotificationResponse(NotificationResponse response) async {
+  static Future didReceiveNotificationResponse(NotificationResponse response) async {
     Get.to(
       () => Container(),
     );
   }
 
-  displayNotification({required String title, required String body}) async {
+  static displayNotification({required String title, required String body}) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'Channel ID',
       'Channel Name',
@@ -50,14 +50,13 @@ class MedicineNotificationService {
     );
   }
 
-  scheduledNotification() async {
+  static scheduledNotification(
+      int hour, int minutes, Map<String, dynamic> medicineData) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       "Scheduled title",
       "This a scheduled demo notification",
-      tz.TZDateTime.now(tz.local).add(
-        const Duration(seconds: 5),
-      ),
+      convertTime(hour, minutes),
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'Channel ID',
@@ -67,6 +66,29 @@ class MedicineNotificationService {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
     );
+  }
+
+  static tz.TZDateTime convertTime(int hour, int minutes) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime schedule = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minutes,
+    );
+    if (schedule.isBefore(now)) {
+      schedule = schedule.add(const Duration(days: 1));
+    }
+    return schedule;
+  }
+
+  static Future<void> localTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZone = tz.getLocation(tz.local.name).toString();
+    tz.setLocalLocation(tz.getLocation(timeZone));
   }
 }

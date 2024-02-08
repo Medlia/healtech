@@ -88,11 +88,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       );
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.onInverseSurface,
                           content: Text(
                             "Reset email sent",
                             style: TextStyle(
+                              color:
+                                  Theme.of(context).colorScheme.inverseSurface,
                               fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),

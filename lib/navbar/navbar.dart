@@ -4,6 +4,7 @@ import 'package:healtech/appointment/appointment_schedule.dart';
 import 'package:healtech/home/home.dart';
 import 'package:healtech/medicine/medicine_schedule.dart';
 import 'package:healtech/profile/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -13,7 +14,6 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int selectedIndex = 0;
   final List<Widget> screens = <Widget>[
     const Home(),
     const ReportAnalysis(),
@@ -22,12 +22,27 @@ class _NavBarState extends State<NavBar> {
     const Profile(),
   ];
 
-  void onTap(int index) {
-    return setState(
-      () {
-        selectedIndex = index;
-      },
-    );
+  late int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedIndex();
+  }
+
+  Future<void> _loadSelectedIndex() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedIndex = prefs.getInt('selectedIndex') ?? 0;
+    });
+  }
+
+  void _onTap(int index) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('selectedIndex', index);
+    setState(() {
+      selectedIndex = index;
+    });
   }
 
   @override
@@ -42,7 +57,7 @@ class _NavBarState extends State<NavBar> {
         ),
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         selectedIndex: selectedIndex,
-        onDestinationSelected: onTap,
+        onDestinationSelected: _onTap,
         destinations: const [
           NavigationDestination(
             icon: Icon(
