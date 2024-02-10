@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:healtech/navbar/navbar.dart';
+import 'package:healtech/auth/user_details.dart';
 import 'package:healtech/service/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,7 +36,7 @@ class _EmailVerifyState extends State<EmailVerify> {
         } else {
           final bool onEmailVerification = snapshot.data ?? false;
           return onEmailVerification
-              ? const NavBar()
+              ? const UserDetails()
               : Scaffold(
                   appBar: AppBar(
                     title: Padding(
@@ -79,6 +79,24 @@ class _EmailVerifyState extends State<EmailVerify> {
                             TextButton(
                               onPressed: () async {
                                 await AuthService.emailVerification(context);
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .onInverseSurface,
+                                    content: Text(
+                                      "Verification email sent",
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .inverseSurface,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 "Send verification email",
@@ -102,7 +120,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                                     if (!context.mounted) return;
                                     Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
-                                      '/signin',
+                                      '/userdetails',
                                       (route) => false,
                                     );
                                   } else {
@@ -110,14 +128,14 @@ class _EmailVerifyState extends State<EmailVerify> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .onInverseSurface,
+                                            .colorScheme
+                                            .onInverseSurface,
                                         content: Text(
                                           "Verify email before proceeding",
                                           style: TextStyle(
                                             color: Theme.of(context)
-                                          .colorScheme
-                                          .inverseSurface,
+                                                .colorScheme
+                                                .inverseSurface,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),

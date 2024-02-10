@@ -13,6 +13,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  CollectionReference details =
+      FirebaseFirestore.instance.collection('details');
   String gender = '';
   String age = '';
   String weight = '';
@@ -28,196 +30,225 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<void> fetchUserProfile() async {
-    final user = FirebaseAuth.instance.currentUser!.uid;
-    if (user.isNotEmpty) {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-          .instance
-          .collection('details')
-          .doc(user)
-          .get();
-      if (snapshot.exists) {
-        setState(
-          () {
-            gender = snapshot.data()!['gender'];
-            age = snapshot.data()!['age'];
-            weight = snapshot.data()!['weight'];
-          },
-        );
-      }
-    }
-  }
-
   @override
   void initState() {
-    fetchUserProfile();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(
-            top: 8,
-          ),
-          child: Text(
-            "Profile",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
-              fontWeight: FontWeight.w600,
+    return FutureBuilder(
+      future: details.doc(FirebaseAuth.instance.currentUser!.uid).get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (snapshot.data == null) {
+          return const Center(
+            child: Text('No user details.'),
+          );
+        } else {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          gender = data['gender'];
+          age = data['age'];
+          weight = data['weight'];
+          return Scaffold(
+            appBar: AppBar(
+              title: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                ),
+                child: Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontSize:
+                        Theme.of(context).textTheme.headlineMedium?.fontSize,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const Setting(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.settings_rounded),
+                ),
+              ],
             ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const Setting(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.settings_rounded),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          margin: const EdgeInsets.only(bottom: 20),
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    avatar != null
-                        ? CircleAvatar(
-                            radius: 54,
-                            backgroundImage: FileImage(avatar!),
-                          )
-                        : const CircleAvatar(
-                            radius: 54,
-                            backgroundImage: NetworkImage(
-                              'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=',
-                            ),
-                          ),
-                    Positioned(
-                      bottom: 1,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: () async {
-                          await handleImageSelection();
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 40),
-                Expanded(
-                  child: ListView(
+            body: SafeArea(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                margin: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.all(8),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 100,
-                        width: double.infinity,
-                        child: Card(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  "Gender",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(gender),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
+                      Stack(
                         children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 100,
-                              width: double.infinity / 2,
-                              child: Card(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "Age",
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(age),
-                                    ],
+                          avatar != null
+                              ? CircleAvatar(
+                                  radius: 54,
+                                  backgroundImage: FileImage(avatar!),
+                                )
+                              : const CircleAvatar(
+                                  radius: 54,
+                                  backgroundImage: NetworkImage(
+                                    'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=',
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: SizedBox(
-                              height: 100,
-                              width: double.infinity / 2,
-                              child: Card(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "Weight",
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(weight),
-                                    ],
-                                  ),
+                          Positioned(
+                            bottom: 1,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () async {
+                                await handleImageSelection();
+                              },
+                              child: Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Icon(
+                                  Icons.edit,
+                                  size: 20,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
+                      const SizedBox(height: 40),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            SizedBox(
+                              height: 100,
+                              width: double.infinity,
+                              child: Card(
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        "Gender",
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        gender,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: double.infinity / 2,
+                                    child: Card(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              "Age",
+                                              style: TextStyle(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Text(
+                                              age,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: double.infinity / 2,
+                                    child: Card(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              "Weight",
+                                              style: TextStyle(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Text(
+                                              weight,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }

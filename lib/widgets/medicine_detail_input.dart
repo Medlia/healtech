@@ -6,14 +6,14 @@ class DetailField extends StatefulWidget {
   final TextInputType? type;
   final String? suffixText;
   final Widget? suffixIcon;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   const DetailField({
     super.key,
+     required this.controller,
     required this.title,
     required this.hint,
     this.type,
     this.suffixIcon,
-    this.controller,
     this.suffixText,
   });
 
@@ -43,6 +43,7 @@ class _DetailFieldState extends State<DetailField> {
                 child: TextField(
                   controller: widget.controller,
                   keyboardType: widget.type,
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     hintText: widget.hint,
                     suffixText: widget.suffixText,

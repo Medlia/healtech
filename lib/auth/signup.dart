@@ -34,9 +34,9 @@ class _SignUpState extends State<SignUp> {
     return prefs.getBool('isSignedUp') ?? false;
   }
 
-  void _onSignUp(context) async {
+  void signUpCompleted() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isSignedUp', true);
+    prefs.setBool('isOnBoardingShown', true);
   }
 
   @override
@@ -124,7 +124,6 @@ class _SignUpState extends State<SignUp> {
                               width: 200,
                               child: FilledButton(
                                 onPressed: () async {
-                                  _onSignUp(context);
                                   await AuthService.signup(
                                     context,
                                     _email.text,

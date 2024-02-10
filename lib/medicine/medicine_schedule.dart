@@ -21,7 +21,6 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
   void initState() {
     super.initState();
     medicationService = MedicationService();
-    MedicationService.initializeNotification();
     medicinesCollection = FirebaseFirestore.instance.collection('medicines');
   }
 
@@ -165,15 +164,9 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                           int.parse(durationParts[0]),
                           int.parse(durationParts[1]),
                         );
-                        var timeParts = medicineData['time'].split(' ');
-                        var time = timeParts[0].split(':');
+
                         if (_selectedDate.isBefore(duration) ||
                             _selectedDate.isAtSameMomentAs(duration)) {
-                          MedicationService.scheduledNotification(
-                            int.parse(time[0]),
-                            int.parse(time[1]),
-                            medicineData,
-                          );
                           return Dismissible(
                             key: Key(docID),
                             direction: DismissDirection.endToStart,

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:healtech/auth/signup.dart';
+import 'package:healtech/navbar/navbar.dart';
 import 'package:healtech/widgets/detail_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +55,7 @@ class _UserDetailsState extends State<UserDetails> {
 
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => const SignUp(),
+        builder: (_) => const NavBar(),
       ),
     );
   }
@@ -70,7 +70,7 @@ class _UserDetailsState extends State<UserDetails> {
         } else {
           final bool onUserDetails = snapshot.data ?? false;
           return onUserDetails
-              ? const SignUp()
+              ? const NavBar()
               : Scaffold(
                   appBar: AppBar(
                     title: Padding(

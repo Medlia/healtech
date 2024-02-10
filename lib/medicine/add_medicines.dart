@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/service/medication_service.dart';
 import 'package:healtech/widgets/medicine_detail_input.dart';
 import 'package:intl/intl.dart';
 
@@ -138,28 +139,37 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                   hint: "Before/After",
                 ),
                 const SizedBox(height: 10),
-                DetailField(
-                  controller: _time,
-                  title: 'Time',
-                  hint: time.toString(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      getTimeFromUser();
-                    },
-                    icon: const Icon(Icons.access_time_rounded),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                DetailField(
-                  controller: _duration,
-                  title: 'Duration',
-                  hint: selectedDate.toString(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      getDateFromUser();
-                    },
-                    icon: const Icon(Icons.calendar_today_rounded),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: DetailField(
+                        controller: _time,
+                        title: 'Time',
+                        hint: time.toString(),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            getTimeFromUser();
+                          },
+                          icon: const Icon(Icons.access_time_rounded),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: DetailField(
+                        controller: _duration,
+                        title: 'Duration',
+                        hint: selectedDate.toString(),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            getDateFromUser();
+                          },
+                          icon: const Icon(Icons.calendar_today_rounded),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
@@ -168,6 +178,21 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                   child: FilledButton(
                     onPressed: () async {
                       saveMedicineDetails();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.onInverseSurface,
+                          content: Text(
+                            "Medication added",
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).colorScheme.inverseSurface,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
                     },
                     child: const Text(
                       "Done",
@@ -229,6 +254,12 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
   }
 
   Future<void> saveMedicineDetails() async {
+    var parts = time.split(' ');
+    var completeTime = parts[0].split(':');
+    await MedicationService.scheduledNotification(
+        int.parse(completeTime[0]),
+        int.parse(completeTime[1]),
+        "Remember to take ${_quantity.text} of ${_dosage.text} of ${_name.text} at $time");
     await FirebaseFirestore.instance
         .collection('medicines')
         .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -245,5 +276,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
         'duration': selectedDate,
       },
     );
+    if (!context.mounted) return;
+    Navigator.pop(context);
   }
 }

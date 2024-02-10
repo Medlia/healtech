@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healtech/auth/user_details.dart';
+import 'package:healtech/auth/signup.dart';
 import 'package:healtech/widgets/onboarding_content.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,7 +37,7 @@ class OnBoardingState extends State<OnBoarding> {
 
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => const UserDetails(),
+        builder: (_) => const SignUp(),
       ),
     );
   }
@@ -52,7 +52,7 @@ class OnBoardingState extends State<OnBoarding> {
         } else {
           final bool onBoardingShown = snapshot.data ?? false;
           return onBoardingShown
-              ? const UserDetails()
+              ? const SignUp()
               : Scaffold(
                   body: SafeArea(
                     child: Container(
