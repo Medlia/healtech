@@ -80,6 +80,7 @@ class _SignUpState extends State<SignUp> {
                             const Spacer(),
                             Text(
                               "Create your account",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: Theme.of(context)
                                     .textTheme

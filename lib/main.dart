@@ -14,7 +14,6 @@ import 'package:healtech/medicine/medicine_schedule.dart';
 import 'package:healtech/navbar/navbar.dart';
 import 'package:healtech/service/medication_service.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      navigatorKey: navigatorKey,
       routes: {
         '/signin': (context) => const Signin(),
         '/signup': (context) => const SignUp(),

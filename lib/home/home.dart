@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/chat/chat.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +13,42 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const Chat(),
+            ),
+          );
+        },
+        child: Draggable(
+          feedback: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.bubble_chart_rounded,
+              size: 50,
+            ),
+          ),
+          child: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSecondary,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.bubble_chart_sharp,
+              size: 50,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(
