@@ -30,7 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  bloc:
+  flutter_bloc:
+  dio:
+  lottie: ^3.0.0  
+  flutter_gemini: ^2.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
