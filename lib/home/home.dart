@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:healtech/chat/chat.dart';
 
@@ -9,7 +11,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Offset offset = const Offset(0, 0);
+  List<String> healthQuotes = [
+    "Health is the greatest possession. Contentment is the greatest treasure. Confidence is the greatest friend.",
+    "The only way to keep your health is to eat what you don't want, drink what you don't like, and do what you'd rather not.",
+    "The human body has been designed to resist an infinite number of changes and attacks brought about by its environment.",
+    "The groundwork of all happiness is health.",
+    "The doctor of the future will no longer treat the human frame with drugs, but rather will cure and prevent disease with nutrition.",
+    "Good health and good sense are two of life's greatest blessings.",
+    "Take care of your body. It's the only place you have to live.",
+    "To keep the body in good health is a duty, otherwise we shall not be able to keep our mind strong and clear.",
+    "A man too busy to take care of his health is like a mechanic too busy to take care of his tools",
+    "It is health that is real wealth and not pieces of gold and silver.",
+  ];
+  int random = Random().nextInt(10);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,23 +85,24 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               Container(
-                height: 140,
+                height: 200,
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Card(
-                  color:
-                      Theme.of(context).colorScheme.onTertiary.withOpacity(0.3),
-                  child: const Center(
-                    child: Text(
-                      "\"Health is the greatest gift, contentment the greatest wealth, faithfulness the best relationship.\"",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.italic,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        healthQuotes[random],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
                     ),
                   ),

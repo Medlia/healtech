@@ -75,11 +75,9 @@ class _ChatState extends State<Chat> {
                     }
 
                     if (imagesBytes.isNotEmpty) {
-                      setState(
-                        () {
-                          images = imagesBytes;
-                        },
-                      );
+                      setState(() {
+                        images = imagesBytes;
+                      });
                     }
                   },
                 );
@@ -97,11 +95,9 @@ class _ChatState extends State<Chat> {
                       .streamGenerateContent(searchedText!, images: images)
                       .listen(
                     (value) {
-                      setState(
-                        () {
-                          images = null;
-                        },
-                      );
+                      setState(() {
+                        images = null;
+                      });
                       if (value.finishReason != 'STOP') {
                         finishReason = 'Finish reason is `RECITATION`';
                       }

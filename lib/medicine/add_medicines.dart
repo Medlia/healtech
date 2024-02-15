@@ -177,21 +177,6 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                   child: FilledButton(
                     onPressed: () async {
                       saveMedicineDetails();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.onInverseSurface,
-                          content: Text(
-                            "Medication added",
-                            style: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.inverseSurface,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      );
                     },
                     child: const Text(
                       "Done",
@@ -218,11 +203,9 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
     );
 
     if (date != null) {
-      setState(
-        () {
-          selectedDate = DateFormat.yMd().format(date);
-        },
-      );
+      setState(() {
+        selectedDate = DateFormat.yMd().format(date);
+      });
     }
   }
 
@@ -237,11 +220,9 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
       pickedTime.minute,
     );
     var formattedTime = DateFormat("hh:mm a").format(selectedDateTime);
-    setState(
-      () {
-        time = formattedTime;
-      },
-    );
+    setState(() {
+      time = formattedTime;
+    });
   }
 
   Future<TimeOfDay?> getTimePicker() async {
@@ -256,7 +237,8 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
     await FirebaseFirestore.instance
         .collection('medicines')
         .doc(FirebaseAuth.instance.currentUser?.uid)
-        .set(
+        .collection('entries')
+        .add(
       {
         'name': _name.text,
         'description': _description.text,

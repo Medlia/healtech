@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/medicine/add_medicines.dart';
 import 'package:healtech/service/medication_service.dart';
@@ -121,18 +122,20 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                     fontSize: 16,
                   ),
                   onDateChange: (date) {
-                    setState(
-                      () {
-                        _selectedDate = date;
-                      },
-                    );
+                    setState(() {
+                      _selectedDate = date;
+                    });
                   },
                 ),
               ),
               const SizedBox(height: 10),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: medicinesCollection.snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection('medicines')
+                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .collection('entries')
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -157,7 +160,6 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                       itemCount: allMedicines.length,
                       itemBuilder: (context, index) {
                         var medicineData = allMedicines[index];
-                        var docID = snapshot.data!.docs[index].id;
                         var durationParts = medicineData['duration'].split('/');
                         var duration = DateTime(
                           int.parse(durationParts[2]),
@@ -167,142 +169,87 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
 
                         if (_selectedDate.isBefore(duration) ||
                             _selectedDate.isAtSameMomentAs(duration)) {
-                          return Dismissible(
-                            key: Key(docID),
-                            direction: DismissDirection.endToStart,
-                            onDismissed: (direction) {
-                              setState(
-                                () {
-                                  allMedicines.removeAt(index);
-                                },
-                              );
-                              medicinesCollection.doc(docID).delete();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .onInverseSurface,
-                                  content: Text(
-                                    "Medicine deleted",
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .inverseSurface,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  action: SnackBarAction(
-                                    label: "Undo",
-                                    onPressed: () {
-                                      setState(
-                                        () {
-                                          allMedicines.insert(
-                                              index, medicineData);
-                                        },
-                                      );
-                                      medicinesCollection.add(medicineData);
-                                    },
+                          return Container(
+                            padding: const EdgeInsets.all(8),
+                            child: Card(
+                              child: ListTile(
+                                title: Text(
+                                  medicineData['name'],
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              );
-                            },
-                            background: Container(
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.only(right: 40),
-                              color: Theme.of(context).colorScheme.error,
-                              child: IconButton(
-                                onPressed: null,
-                                icon: Icon(
-                                  Icons.delete,
-                                  size: 30,
-                                  color: Theme.of(context).colorScheme.onError,
-                                ),
-                              ),
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              child: Card(
-                                child: ListTile(
-                                  title: Text(
-                                    medicineData['name'],
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Description: ${medicineData['description']}',
+                                      style: const TextStyle(
+                                        fontSize: 17,
+                                      ),
                                     ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Description: ${medicineData['description']}',
-                                        style: const TextStyle(
-                                          fontSize: 17,
+                                    Text(
+                                      'Doctor\'s Name: ${medicineData['doctor\'s name']}',
+                                      style: const TextStyle(
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Type: ${medicineData['type']}',
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Dosage: ${medicineData['dosage']} mg',
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Food Time: ${medicineData['food time']}',
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Text(
-                                        'Doctor\'s Name: ${medicineData['doctor\'s name']}',
-                                        style: const TextStyle(
-                                          fontSize: 17,
+                                        const Spacer(),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Duration: ${medicineData['duration']}',
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Quantity: ${medicineData['quantity']}',
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Time: ${medicineData['time']}',
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Type: ${medicineData['type']}',
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Dosage: ${medicineData['dosage']} mg',
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Food Time: ${medicineData['food time']}',
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Duration: ${medicineData['duration']}',
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Quantity: ${medicineData['quantity']}',
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Time: ${medicineData['time']}',
-                                                style: const TextStyle(
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
