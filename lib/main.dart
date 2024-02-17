@@ -14,7 +14,6 @@ import 'package:healtech/medicine/medicine_schedule.dart';
 import 'package:healtech/navbar/navbar.dart';
 import 'package:healtech/service/medication_service.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

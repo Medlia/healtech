@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:healtech/widgets/image_card.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -16,6 +15,7 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   final ImagePicker picker = ImagePicker();
+  String query = '';
   late final TextEditingController _controller;
   final gemini = Gemini.instance;
   String? searchedText, _finishReason;
@@ -89,6 +89,9 @@ class _ChatState extends State<Chat> {
             IconButton(
               onPressed: () {
                 if (_controller.text.isNotEmpty) {
+                  setState(() {
+                    query = _controller.text;
+                  });
                   searchedText = _controller.text;
                   _controller.clear();
                   gemini
@@ -139,23 +142,50 @@ class _ChatState extends State<Chat> {
                   ),
                 ),
               Expanded(
-                child: GeminiResponseTypeView(
-                  builder: (context, child, response, loading) {
-                    if (loading) {
-                      return Center(
-                        child: Lottie.asset('assets/ai.json'),
-                      );
-                    }
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(
+                    decelerationRate: ScrollDecelerationRate.normal,
+                  ),
+                  child: GeminiResponseTypeView(
+                    builder: (context, child, response, loading) {
+                      if (loading) {
+                        return Center(
+                          child: Lottie.asset('assets/ai.json'),
+                        );
+                      }
 
-                    if (response != null) {
-                      return Markdown(
-                        data: response,
-                        selectable: true,
-                      );
-                    } else {
-                      return const Text('Search something!');
-                    }
-                  },
+                      if (response != null) {
+                        return Container(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                query,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                response,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const Text('Search something!');
+                      }
+                    },
+                  ),
                 ),
               ),
               if (finishReason != null) Text(finishReason!),

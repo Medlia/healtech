@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:healtech/widgets/medicine_detail_input.dart';
+import 'package:healtech/widgets/detail_input.dart';
 import 'package:intl/intl.dart';
 
 class MedicineDetailInput extends StatefulWidget {
@@ -84,27 +84,27 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                   controller: _name,
                   type: TextInputType.text,
                   title: 'Medicine Name',
-                  hint: "Name",
+                  hint: "Enter medicine's name",
                 ),
                 const SizedBox(height: 10),
                 DetailField(
                   controller: _description,
                   type: TextInputType.text,
                   title: 'Description',
-                  hint: "Description",
+                  hint: "Enter the description",
                 ),
                 const SizedBox(height: 10),
                 DetailField(
                   controller: _doctorName,
                   type: TextInputType.text,
                   title: 'Doctor Name',
-                  hint: "Doctor's name",
+                  hint: "Enter the doctor's name",
                 ),
                 const SizedBox(height: 10),
                 DetailField(
                   controller: _type,
                   title: 'Type',
-                  hint: "Type",
+                  hint: "Enter the type of medicine",
                 ),
                 const SizedBox(height: 10),
                 Row(

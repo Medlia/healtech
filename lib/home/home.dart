@@ -83,6 +83,7 @@ class _HomeState extends State<Home> {
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(8),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 height: 200,
@@ -92,20 +93,63 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Card(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        healthQuotes[random],
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontStyle: FontStyle.italic,
+                  color: Theme.of(context).colorScheme.tertiaryContainer,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.health_and_safety_rounded,
+                              size: 30,
+                            ),
+                          ],
                         ),
-                      ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                healthQuotes[random],
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  "Medicines",
+                  style: TextStyle(
+                    fontSize:
+                        Theme.of(context).textTheme.headlineMedium?.fontSize,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                height: 200,
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return const Card();
+                  },
                 ),
               ),
             ],

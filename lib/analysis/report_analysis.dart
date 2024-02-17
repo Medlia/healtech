@@ -25,6 +25,15 @@ class _ReportAnalysisState extends State<ReportAnalysis> {
           ),
         ),
       ),
+      body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [],
+          ),
+        ),
+      ),
     );
   }
 }

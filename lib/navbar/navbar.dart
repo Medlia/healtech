@@ -50,7 +50,7 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
       body: screens[selectedIndex],
       bottomNavigationBar: NavigationBar(
-        elevation: 80,
+        elevation: 10,
         height: 80,
         indicatorShape: const CircleBorder(
           eccentricity: 0.6,
