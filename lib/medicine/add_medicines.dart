@@ -76,9 +76,8 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
           scrollDirection: Axis.vertical,
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DetailField(
                   controller: _name,
@@ -86,27 +85,27 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                   title: 'Medicine Name',
                   hint: "Enter medicine's name",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 DetailField(
                   controller: _description,
                   type: TextInputType.text,
                   title: 'Description',
                   hint: "Enter the description",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 DetailField(
                   controller: _doctorName,
                   type: TextInputType.text,
                   title: 'Doctor Name',
                   hint: "Enter the doctor's name",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 DetailField(
                   controller: _type,
                   title: 'Type',
                   hint: "Enter the type of medicine",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -130,14 +129,14 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 DetailField(
                   controller: _foodTime,
                   type: TextInputType.text,
                   title: 'Food Time',
                   hint: "Before/After",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -170,7 +169,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 SizedBox(
                   height: 45,
                   width: 200,

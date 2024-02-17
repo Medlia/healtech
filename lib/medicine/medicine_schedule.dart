@@ -45,7 +45,7 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -208,6 +208,7 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),
+                              height: 200,
                               child: Card(
                                 child: ListTile(
                                   title: Text(

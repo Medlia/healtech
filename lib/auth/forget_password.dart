@@ -43,7 +43,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -90,7 +90,7 @@ class _ProfileState extends State<Profile> {
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 margin: const EdgeInsets.only(bottom: 20),
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

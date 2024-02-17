@@ -58,7 +58,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                   body: SafeArea(
                     child: Container(
                       height: MediaQuery.of(context).size.height,
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

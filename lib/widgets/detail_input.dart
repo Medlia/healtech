@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 class DetailField extends StatefulWidget {
   final String title;
   final String hint;
+  final int? maxLines;
   final TextInputType? type;
   final String? suffixText;
   final Widget? suffixIcon;
   final TextEditingController controller;
   const DetailField({
     super.key,
-     required this.controller,
+    required this.controller,
     required this.title,
     required this.hint,
     this.type,
     this.suffixIcon,
     this.suffixText,
+    this.maxLines,
   });
 
   @override
@@ -43,6 +45,7 @@ class _DetailFieldState extends State<DetailField> {
                 child: TextField(
                   controller: widget.controller,
                   keyboardType: widget.type,
+                  maxLines: widget.maxLines,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     hintText: widget.hint,
