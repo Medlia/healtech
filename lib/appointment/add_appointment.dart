@@ -52,6 +52,91 @@ class _AddAppointmentState extends State<AddAppointment> {
     super.dispose();
   }
 
+  Future<void> getTimeFromUser() async {
+    var pickedTime = await getTimePicker();
+    DateTime now = DateTime.now();
+    DateTime selectedDateTime = DateTime(
+      now.day,
+      now.month,
+      now.year,
+      pickedTime!.hour,
+      pickedTime.minute,
+    );
+    var formattedTime = DateFormat("hh:mm a").format(selectedDateTime);
+    setState(() {
+      time = formattedTime;
+    });
+  }
+
+  Future<TimeOfDay?> getTimePicker() async {
+    return showTimePicker(
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      initialTime: TimeOfDay.now(),
+    );
+  }
+
+  Future<File?> pickReportsFile() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      return null;
+    }
+  }
+
+  Future<File?> pickPrescriptionFile() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      return null;
+    }
+  }
+
+  Future<String?> uploadFile(File file, String folder) async {
+    try {
+      final fileName = path.basename(file.path);
+      final destination = '$folder/$fileName';
+      final Reference storageReference =
+          FirebaseStorage.instance.ref().child(destination);
+      final UploadTask uploadTask = storageReference.putFile(file);
+      final TaskSnapshot taskSnapshot =
+          await uploadTask.whenComplete(() => null);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<void> saveAppointmentDetails() async {
+    String? reportsURL;
+    String? prescriptionURL;
+    if (reports != null) {
+      reportsURL = await uploadFile(reports!, 'reports');
+    }
+    if (prescription != null) {
+      prescriptionURL = await uploadFile(prescription!, 'prescriptions');
+    }
+    await FirebaseFirestore.instance
+        .collection('appointment')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('entries')
+        .add(
+      {
+        'doctor\'s name': _doctorName.text,
+        'description': _description.text,
+        'time': time,
+        'date': date,
+        'reports': reportsURL,
+        'prescription': prescriptionURL,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,91 +296,6 @@ class _AddAppointmentState extends State<AddAppointment> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> getTimeFromUser() async {
-    var pickedTime = await getTimePicker();
-    DateTime now = DateTime.now();
-    DateTime selectedDateTime = DateTime(
-      now.day,
-      now.month,
-      now.year,
-      pickedTime!.hour,
-      pickedTime.minute,
-    );
-    var formattedTime = DateFormat("hh:mm a").format(selectedDateTime);
-    setState(() {
-      time = formattedTime;
-    });
-  }
-
-  Future<TimeOfDay?> getTimePicker() async {
-    return showTimePicker(
-      context: context,
-      initialEntryMode: TimePickerEntryMode.input,
-      initialTime: TimeOfDay.now(),
-    );
-  }
-
-  Future<File?> pickReportsFile() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      return File(pickedFile.path);
-    } else {
-      return null;
-    }
-  }
-
-  Future<File?> pickPrescriptionFile() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      return File(pickedFile.path);
-    } else {
-      return null;
-    }
-  }
-
-  Future<String?> uploadFile(File file, String folder) async {
-    try {
-      final fileName = path.basename(file.path);
-      final destination = '$folder/$fileName';
-      final Reference storageReference =
-          FirebaseStorage.instance.ref().child(destination);
-      final UploadTask uploadTask = storageReference.putFile(file);
-      final TaskSnapshot taskSnapshot =
-          await uploadTask.whenComplete(() => null);
-      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      return downloadUrl;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<void> saveAppointmentDetails() async {
-    String? reportsUrl;
-    String? prescriptionUrl;
-    if (reports != null) {
-      reportsUrl = await uploadFile(reports!, 'reports');
-    }
-    if (prescription != null) {
-      prescriptionUrl = await uploadFile(prescription!, 'prescriptions');
-    }
-    await FirebaseFirestore.instance
-        .collection('appointment')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection('entries')
-        .add(
-      {
-        'doctor\'s name': _doctorName.text,
-        'description': _description.text,
-        'time': time,
-        'date': date,
-        'reports': reportsUrl,
-        'prescription': prescriptionUrl,
-      },
     );
   }
 }

@@ -118,8 +118,7 @@ class _AppointmentState extends State<Appointment> {
               const SizedBox(height: 10),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('appointment')
+                  stream: appointmentCollection
                       .doc(FirebaseAuth.instance.currentUser?.uid)
                       .collection('entries')
                       .snapshots(),

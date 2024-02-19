@@ -140,18 +140,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
               const SizedBox(height: 16),
-              Container(
-                height: 200,
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return const Card();
-                  },
-                ),
-              ),
             ],
           ),
         ),
