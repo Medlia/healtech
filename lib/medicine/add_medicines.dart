@@ -76,9 +76,18 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
           scrollDirection: Axis.vertical,
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
+            padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
             child: Column(
               children: [
+                Text(
+                  "All the fields are mandatory",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 DetailField(
                   controller: _name,
                   type: TextInputType.text,

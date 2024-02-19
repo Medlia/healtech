@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: GoogleFonts.inter().fontFamily,
         colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
           seedColor: Colors.deepPurple,
         ),
         useMaterial3: true,

@@ -54,7 +54,7 @@ class _SigninState extends State<Signin> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
+          padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

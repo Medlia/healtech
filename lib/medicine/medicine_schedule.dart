@@ -45,7 +45,7 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
+          padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -198,7 +198,9 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                                     onPressed: () {
                                       setState(() {
                                         allMedicines.insert(
-                                            index, medicineData);
+                                          index,
+                                          medicineData,
+                                        );
                                       });
                                       medicinesCollection.add(medicineData);
                                     },

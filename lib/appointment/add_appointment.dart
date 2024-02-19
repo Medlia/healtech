@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:healtech/service/appointment_service.dart';
 import 'package:healtech/widgets/detail_input.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as path;
 
 class AddAppointment extends StatefulWidget {
   final DateTime dateTime;
@@ -18,26 +20,22 @@ class AddAppointment extends StatefulWidget {
 }
 
 class _AddAppointmentState extends State<AddAppointment> {
+  late DateTime selectedDate;
+  late String date;
   var time = DateFormat("hh:mm a").format(DateTime.now().toLocal());
-  var selectedDate = DateFormat.yMd().format(DateTime.now());
   late final TextEditingController _doctorName;
   late final TextEditingController _date;
   late final TextEditingController _time;
   late final TextEditingController _description;
-  File? avatar;
-
-  Future<void> handleImageSelection() async {
-    File? selectedImage = await AppointmentService.pickImage();
-    if (selectedImage != null) {
-      setState(() {
-        avatar = selectedImage;
-      });
-      await AppointmentService.uploadImage(avatar);
-    }
-  }
+  File? reports;
+  File? prescription;
 
   @override
   void initState() {
+    selectedDate = widget.dateTime;
+    var splitDate = selectedDate.toString().split(" ");
+    DateTime finalDate = DateTime.parse(splitDate[0]);
+    date = DateFormat.yMd().format(finalDate);
     _doctorName = TextEditingController();
     _date = TextEditingController();
     _time = TextEditingController();
@@ -72,140 +70,148 @@ class _AddAppointmentState extends State<AddAppointment> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
-          child: Column(
-            children: [
-              DetailField(
-                controller: _doctorName,
-                title: 'Doctor\'s name',
-                hint: "Enter doctor's name",
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: DetailField(
-                      controller: _date,
-                      title: 'Appointment date',
-                      hint: selectedDate.toString(),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          getDateFromUser();
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            padding: const EdgeInsets.fromLTRB(8, 20, 8, 8),
+            child: Column(
+              children: [
+                Text(
+                  "All the fields are mandatory",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                DetailField(
+                  controller: _doctorName,
+                  type: TextInputType.text,
+                  title: 'Doctor\'s name',
+                  hint: "Enter doctor's name",
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DetailField(
+                        controller: _date,
+                        title: 'Appointment date',
+                        hint: date,
+                        readOnly: true,
+                        suffixIcon: const IconButton(
+                          onPressed: null,
+                          icon: Icon(Icons.calendar_today_rounded),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: DetailField(
+                        controller: _time,
+                        title: 'Appointment time',
+                        hint: time.toString(),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            getTimeFromUser();
+                          },
+                          icon: const Icon(Icons.access_time_rounded),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                DetailField(
+                  controller: _description,
+                  type: TextInputType.text,
+                  title: 'Description',
+                  hint: "Enter description",
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    const Text(
+                      "Upload reports",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 80),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      child: IconButton(
+                        onPressed: () async {
+                          final file = await pickReportsFile();
+                          setState(() {
+                            reports = file;
+                          });
                         },
-                        icon: const Icon(Icons.calendar_today_rounded),
+                        icon: const Icon(Icons.attach_file_rounded),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: DetailField(
-                      controller: _time,
-                      title: 'Appointment time',
-                      hint: time.toString(),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          getTimeFromUser();
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    const Text(
+                      "Upload prescription",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 40),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      child: IconButton(
+                        onPressed: () async {
+                          final file = await pickPrescriptionFile();
+                          setState(() {
+                            prescription = file;
+                          });
                         },
-                        icon: const Icon(Icons.access_time_rounded),
+                        icon: const Icon(Icons.notes_rounded),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              DetailField(
-                controller: _description,
-                title: 'Description',
-                hint: "Enter description",
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const Text(
-                    "Upload reports",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(width: 80),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.grey.shade400,
+                  ],
+                ),
+                const SizedBox(height: 50),
+                SizedBox(
+                  height: 45,
+                  width: 200,
+                  child: FilledButton(
+                    onPressed: () async {
+                      saveAppointmentDetails();
+                    },
+                    child: const Text(
+                      "Done",
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.attach_file_rounded),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const Text(
-                    "Upload prescription",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(width: 40),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.notes_rounded),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 50),
-              SizedBox(
-                height: 45,
-                width: 200,
-                child: FilledButton(
-                  onPressed: () async {
-                    saveAppointmentDetails();
-                  },
-                  child: const Text(
-                    "Done",
-                    style: TextStyle(
-                      fontSize: 16,
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  Future<void> getDateFromUser() async {
-    DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2013),
-      lastDate: DateTime(2130),
-    );
-
-    if (date != null) {
-      setState(() {
-        selectedDate = DateFormat.yMd().format(date);
-      });
-    }
   }
 
   Future<void> getTimeFromUser() async {
@@ -232,7 +238,51 @@ class _AddAppointmentState extends State<AddAppointment> {
     );
   }
 
+  Future<File?> pickReportsFile() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      return null;
+    }
+  }
+
+  Future<File?> pickPrescriptionFile() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      return null;
+    }
+  }
+
+  Future<String?> uploadFile(File file, String folder) async {
+    try {
+      final fileName = path.basename(file.path);
+      final destination = '$folder/$fileName';
+      final Reference storageReference =
+          FirebaseStorage.instance.ref().child(destination);
+      final UploadTask uploadTask = storageReference.putFile(file);
+      final TaskSnapshot taskSnapshot =
+          await uploadTask.whenComplete(() => null);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<void> saveAppointmentDetails() async {
+    String? reportsUrl;
+    String? prescriptionUrl;
+    if (reports != null) {
+      reportsUrl = await uploadFile(reports!, 'reports');
+    }
+    if (prescription != null) {
+      prescriptionUrl = await uploadFile(prescription!, 'prescriptions');
+    }
     await FirebaseFirestore.instance
         .collection('appointment')
         .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -242,7 +292,9 @@ class _AddAppointmentState extends State<AddAppointment> {
         'doctor\'s name': _doctorName.text,
         'description': _description.text,
         'time': time,
-        'date': selectedDate,
+        'date': date,
+        'reports': reportsUrl,
+        'prescription': prescriptionUrl,
       },
     );
   }

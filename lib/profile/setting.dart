@@ -37,7 +37,7 @@ class _SettingState extends State<Setting> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
+          padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
           margin: const EdgeInsets.only(top: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

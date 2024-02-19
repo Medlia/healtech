@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/appointment/add_appointment.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -10,7 +12,15 @@ class Appointment extends StatefulWidget {
 }
 
 class _AppointmentState extends State<Appointment> {
+  late final CollectionReference appointmentCollection;
   DateTime today = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    appointmentCollection =
+        FirebaseFirestore.instance.collection('appointment');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +61,10 @@ class _AppointmentState extends State<Appointment> {
           color: Theme.of(context).colorScheme.inverseSurface,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12, 24, 12, 12),
+          padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
           child: Column(
             children: [
               TableCalendar(
@@ -68,7 +77,6 @@ class _AppointmentState extends State<Appointment> {
                 },
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
-                  headerPadding: EdgeInsets.all(8),
                   leftChevronIcon: Icon(
                     Icons.chevron_left_rounded,
                     size: 30,
@@ -106,6 +114,193 @@ class _AppointmentState extends State<Appointment> {
                     focusedDay = today;
                   });
                 },
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('appointment')
+                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .collection('entries')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else if (snapshot.data == null ||
+                        snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                        child: Text('No appointment added yet.'),
+                      );
+                    }
+                    var allAppointments = snapshot.data!.docs
+                        .map((appointment) =>
+                            appointment.data() as Map<String, dynamic>)
+                        .toList();
+                    return ListView.builder(
+                      itemCount: allAppointments.length,
+                      itemBuilder: (context, index) {
+                        var appointmentData = allAppointments[index];
+                        var date = appointmentData['date'].split('/');
+                        var finalDate = DateTime(
+                          int.parse(date[2]),
+                          int.parse(date[0]),
+                          int.parse(date[1]),
+                        );
+                        var docID = snapshot.data!.docs[index].id;
+                        if (today.year == finalDate.year &&
+                            today.month == finalDate.month &&
+                            today.day == finalDate.day) {
+                          return Dismissible(
+                            key: Key(docID),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (direction) {
+                              setState(() {
+                                allAppointments.removeAt(index);
+                              });
+                              appointmentCollection.doc(docID).delete();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .onInverseSurface,
+                                  content: Text(
+                                    "Appointment deleted",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .inverseSurface,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  action: SnackBarAction(
+                                    label: "Undo",
+                                    onPressed: () {
+                                      setState(() {
+                                        allAppointments.insert(
+                                          index,
+                                          appointmentData,
+                                        );
+                                      });
+                                      appointmentCollection
+                                          .add(appointmentData);
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              height: 260,
+                              child: Card(
+                                child: ListTile(
+                                  title: Text(
+                                    appointmentData['doctor\'s name'],
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Description: ${appointmentData['description']}',
+                                        style: const TextStyle(
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Time: ${appointmentData['time']}',
+                                        style: const TextStyle(
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Date: ${appointmentData['date']}',
+                                        style: const TextStyle(
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierColor: Theme.of(context)
+                                                    .colorScheme
+                                                    .scrim,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Dialog(
+                                                    child: Image.network(
+                                                      appointmentData[
+                                                          'reports'],
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Image.network(
+                                              appointmentData['reports'],
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierColor: Theme.of(context)
+                                                    .colorScheme
+                                                    .scrim,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Dialog(
+                                                    child: Image.network(
+                                                      appointmentData[
+                                                          'prescription'],
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Image.network(
+                                              appointmentData['prescription'],
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),
