@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healtech/analysis/analyse.dart';
@@ -34,42 +33,34 @@ class _ReportAnalysisState extends State<ReportAnalysis> {
     }
   }
 
-  Future<List<String>> uploadFiles(List<Uint8List> files, String folder) async {
-    List<String> downloadURLs = [];
-
-    for (var file in files) {
-      try {
-        final fileName = path.basename(file.toString());
-        final destination = '$folder/$fileName';
-        final Reference storageReference =
-            FirebaseStorage.instance.ref().child(destination);
-        final UploadTask uploadTask = storageReference.putFile(file as File);
-        final TaskSnapshot taskSnapshot =
-            await uploadTask.whenComplete(() => null);
-        final String downloadURL = await taskSnapshot.ref.getDownloadURL();
-        downloadURLs.add(downloadURL);
-      } catch (e) {
-        rethrow;
-      }
+  Future uploadFile(File file, String folder) async {
+    try {
+      final fileName = path.basename(file.path);
+      final destination = '$folder/$fileName';
+      final Reference storageReference =
+          FirebaseStorage.instance.ref().child(destination);
+      final UploadTask uploadTask = storageReference.putFile(file);
+      final TaskSnapshot taskSnapshot =
+          await uploadTask.whenComplete(() => null);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      return null;
     }
-    return downloadURLs;
   }
 
-  Future<void> saveReports(List<Uint8List> reports) async {
-    List<String> reportURLs = await uploadFiles(reports, 'reportAnalysis');
+  Future<void> saveReports(File report) async {
+    List reportURL = await uploadFile(report, 'reportAnalysis');
 
     List<Future> futures = [];
-    for (var reportURL in reportURLs) {
-      futures.add(
-        reportCollection
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('entries')
-            .add(
-          {'report': reportURL},
-        ),
-      );
-    }
-    await Future.wait(futures);
+    futures.add(
+      reportCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('entries')
+          .add(
+        {'report': reportURL},
+      ),
+    );
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:healtech/auth/forget_password.dart';
 import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -14,11 +13,6 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   late final TextEditingController _email;
   late final TextEditingController _password;
-
-  Future<bool> signedIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isSignedIn') ?? false;
-  }
 
   @override
   void initState() {
@@ -109,9 +103,6 @@ class _SigninState extends State<Signin> {
                         _email.text,
                         _password.text,
                       );
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setBool('isSignedIn', true);
                     },
                     child: const Text(
                       "Sign in",

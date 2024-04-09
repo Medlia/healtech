@@ -26,11 +26,6 @@ class OnBoardingState extends State<OnBoarding> {
     super.dispose();
   }
 
-  Future<bool> onBoardingShown() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isOnBoardingShown') ?? false;
-  }
-
   void _onIntroEnd(context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isOnBoardingShown', true);
@@ -44,16 +39,7 @@ class OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: onBoardingShown(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else {
-          final bool onBoardingShown = snapshot.data ?? false;
-          return onBoardingShown
-              ? const SignUp()
-              : Scaffold(
+    return Scaffold(
                   body: SafeArea(
                     child: Container(
                       height: MediaQuery.of(context).size.height,
@@ -120,8 +106,5 @@ class OnBoardingState extends State<OnBoarding> {
                   ),
                   bottomSheet: DotIndicator(page: _page),
                 );
-        }
-      },
-    );
   }
 }
