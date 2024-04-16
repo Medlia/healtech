@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/sizes.dart';
 
 class DetailField extends StatefulWidget {
   final String title;
@@ -32,16 +33,16 @@ class _DetailFieldState extends State<DetailField> {
         Text(
           widget.title,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: Sizes.largeFont,
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: Sizes.tileSpace),
         Row(
           children: [
             Expanded(
               child: SizedBox(
-                height: 50,
+                height: Sizes.textFieldHeight,
                 child: TextField(
                   controller: widget.controller,
                   keyboardType: widget.type,
@@ -52,7 +53,7 @@ class _DetailFieldState extends State<DetailField> {
                     suffixText: widget.suffixText,
                     suffixIcon: widget.suffixIcon,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(Sizes.fieldBorderRadius),
                     ),
                   ),
                 ),

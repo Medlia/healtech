@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/sizes.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -22,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: Sizes.textFieldHeight,
       child: TextField(
         controller: controller,
         obscureText: obscureText ?? false,
@@ -31,13 +32,10 @@ class CustomTextField extends StatelessWidget {
         autocorrect: autoCorrect,
         decoration: InputDecoration(
           labelText: labelText,
-          labelStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
+          labelStyle: Theme.of(context).textTheme.bodySmall,
           icon: icon,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(Sizes.fieldBorderRadius),
           ),
         ),
       ),

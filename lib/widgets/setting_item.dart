@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/sizes.dart';
 
 class SettingItem extends StatelessWidget {
   final IconData icon;
@@ -16,37 +17,37 @@ class SettingItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
+        height: Sizes.settingTileHeight,
         width: double.infinity,
         padding: const EdgeInsets.only(
-          top: 8,
-          bottom: 8,
+          top: Sizes.small,
+          bottom: Sizes.small,
         ),
         decoration: BoxDecoration(
           color: Colors.grey[800]?.withOpacity(0.1),
           backgroundBlendMode: BlendMode.overlay,
         ),
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(Sizes.small),
           child: Row(
             children: [
               Icon(
                 icon,
-                size: 32,
+                size: Sizes.largeIcon,
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: Sizes.sectionSpace),
               Text(
                 text,
                 textAlign: TextAlign.start,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: Sizes.largeFont,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const Spacer(),
               const Icon(
                 Icons.chevron_right,
-                size: 32,
+                size: Sizes.largeIcon,
               ),
             ],
           ),

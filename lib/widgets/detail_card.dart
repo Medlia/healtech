@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/sizes.dart';
 
 class DetailCard extends StatefulWidget {
   final TextEditingController _controller;
@@ -21,11 +22,11 @@ class _DetailCardState extends State<DetailCard> {
     final InputBorder border = UnderlineInputBorder(
       borderSide: BorderSide(
         color: Theme.of(context).colorScheme.primary,
-        width: 2,
+        width: Sizes.verySmall / 2,
       ),
     );
     return SizedBox(
-      height: 70,
+      height: Sizes.detailCardHeight,
       width: double.infinity,
       child: Container(
         decoration: BoxDecoration(
@@ -35,15 +36,15 @@ class _DetailCardState extends State<DetailCard> {
         child: Card(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(20),
+              Radius.circular(Sizes.cardBorderRadius),
             ),
           ),
           child: Row(
             children: [
               const Spacer(),
               SizedBox(
-                height: 58,
-                width: 100,
+                height: Sizes.settingTileHeight,
+                width: Sizes.profileCardHeight,
                 child: TextField(
                   controller: widget._controller,
                   keyboardType: widget.type,
@@ -65,7 +66,7 @@ class _DetailCardState extends State<DetailCard> {
               Text(
                 widget.detail,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: Sizes.mediumFont,
                   fontWeight: FontWeight.w500,
                 ),
               ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/asset_strings.dart';
+import 'package:healtech/constants/colors.dart';
+import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/constants/text_strings.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Content {
@@ -15,25 +19,24 @@ class Content {
 
 final List<Content> content = [
   Content(
-    title: "Meet MedLia",
-    description: "Your Personalized Healthcare Assistant",
-    image: 'assets/assistant1.png',
+    title: TextStrings.titleOne,
+    description: TextStrings.descOne,
+    image: AssetString.onBoardImageOne,
   ),
   Content(
-    title: "Never miss a dosage",
-    description: "MedLia helps you stays on track with your medicines",
-    image: 'assets/medicine.png',
+    title: TextStrings.titleTwo,
+    description: TextStrings.descTwo,
+    image: AssetString.onBoardImageTwo,
   ),
   Content(
-    title: "Confused about anything?",
-    description: "MedLia clarifies every doubt you may have",
-    image: 'assets/doubt.png',
+    title: TextStrings.titleThree,
+    description: TextStrings.descThree,
+    image: AssetString.onBoardImageThree,
   ),
   Content(
-    title: "Efficient report management",
-    description:
-        "Handle your reports efficiently and get analyses, all in one place",
-    image: 'assets/report.png',
+    title: TextStrings.titleFour,
+    description: TextStrings.descFour,
+    image: AssetString.onBoardImageFour,
   ),
 ];
 
@@ -61,7 +64,7 @@ class OnBoardingContent extends StatelessWidget {
               fontSize: Theme.of(context).textTheme.displaySmall?.fontSize,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: Sizes.verySmall),
           Text(
             description ?? "",
             textAlign: TextAlign.center,
@@ -70,11 +73,11 @@ class OnBoardingContent extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: Sizes.largeSpace),
           Image.asset(
             image,
-            height: 200,
-            width: 200,
+            height: Sizes.onBoardImageHeight,
+            width: Sizes.onBoardImageWidth,
           ),
           const Spacer(),
         ],
@@ -93,8 +96,8 @@ class DotIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
-      height: 80,
+      padding: const EdgeInsets.all(Sizes.small),
+      height: Sizes.largestHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -109,7 +112,7 @@ class DotIndicator extends StatelessWidget {
             child: const Text(
               "Back",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: Sizes.mediumFont,
               ),
             ),
           ),
@@ -118,16 +121,18 @@ class DotIndicator extends StatelessWidget {
             child: SmoothPageIndicator(
               controller: _page,
               count: 5,
-              effect: WormEffect(
-                dotHeight: 10,
-                dotWidth: 10,
+              effect: const WormEffect(
+                dotHeight: Sizes.tileSpace,
+                dotWidth: Sizes.tileSpace,
                 paintStyle: PaintingStyle.stroke,
-                dotColor: Theme.of(context).colorScheme.onSecondaryContainer,
-                activeDotColor: Theme.of(context).colorScheme.secondary,
+                dotColor: CustomColors.primaryColor,
+                activeDotColor: CustomColors.primaryAccentColor,
               ),
               onDotClicked: (index) => _page.animateToPage(
                 index,
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(
+                  milliseconds: 500,
+                ),
                 curve: Curves.easeInOut,
               ),
             ),
@@ -145,7 +150,7 @@ class DotIndicator extends StatelessWidget {
             child: const Text(
               "Next",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: Sizes.mediumFont,
               ),
             ),
           ),
