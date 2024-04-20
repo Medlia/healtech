@@ -4,7 +4,6 @@ import 'package:healtech/screens/email_verification.dart';
 import 'package:healtech/screens/reset_password.dart';
 import 'package:healtech/screens/medicine_schedule.dart';
 import 'package:healtech/screens/navbar.dart';
-import 'package:healtech/screens/onboarding.dart';
 import 'package:healtech/screens/signin.dart';
 import 'package:healtech/screens/signup.dart';
 import 'package:healtech/screens/user_details.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/medicineschedule': (context) => const MedicineSchedule(),
         '/chat': (context) => const Chat(),
       },
-      home: const OnBoarding(),
+      home: const NavBar(),
     );
   }
 }

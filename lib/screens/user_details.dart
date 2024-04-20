@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/detail_card.dart';
 
 class UserDetails extends StatefulWidget {
@@ -95,20 +94,11 @@ class _UserDetailsState extends State<UserDetails> {
                     width: Sizes.buttonWidth,
                     child: FilledButton(
                       onPressed: () async {
-                        await FirebaseFirestore.instance
-                            .collection('details')
-                            .doc(FirebaseAuth.instance.currentUser?.uid)
-                            .set(
-                          {
-                            'gender': _gender.text,
-                            'age': _age.text,
-                            'weight': _weight.text,
-                          },
-                        );
-                        if (!context.mounted) return;
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/navbar',
-                          (route) => false,
+                        await AuthService.saveUserDetails(
+                          context,
+                          _gender.text,
+                          _age.text,
+                          _weight.text,
                         );
                       },
                       child: const Text(

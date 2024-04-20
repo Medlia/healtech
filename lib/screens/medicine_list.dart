@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/medicine_display_card.dart';
 
 class MedicineList extends StatefulWidget {
@@ -27,12 +27,7 @@ class _MedicineListState extends State<MedicineList> {
         child: Container(
           padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('medicines')
-                .doc(FirebaseAuth.instance.currentUser?.uid)
-                .collection('entries')
-                .orderBy('name', descending: false)
-                .snapshots(),
+            stream: MedicineService.orderedMedicineSnapshots,
             builder: (context, snapshot) {
               if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
                 return const Center(

@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/chat.dart';
-import 'package:healtech/constants/text_strings.dart';
 import 'package:healtech/screens/medicine_list.dart';
+import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/medicine_display_card.dart';
+import 'package:healtech/widgets/quote_display_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -29,30 +29,15 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-        child: Draggable(
-          feedback: Container(
-            height: Sizes.settingTileHeight,
-            width: Sizes.settingTileHeight,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSecondary,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.bubble_chart_rounded,
-              size: Sizes.largerIcon,
-            ),
+        child: Container(
+          height: Sizes.settingTileHeight,
+          width: Sizes.settingTileHeight,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
           ),
-          child: Container(
-            height: Sizes.settingTileHeight,
-            width: Sizes.settingTileHeight,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSecondary,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.bubble_chart_sharp,
-              size: Sizes.largerIcon,
-            ),
+          child: const Icon(
+            Icons.bubble_chart_sharp,
+            size: Sizes.largerIcon,
           ),
         ),
       ),
@@ -73,50 +58,7 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: Sizes.medicineCardHeight,
-                width: double.infinity,
-                padding: const EdgeInsets.all(Sizes.small),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Sizes.cardBorderRadius),
-                ),
-                child: Card(
-                  color: Theme.of(context).colorScheme.tertiaryContainer,
-                  child: Padding(
-                    padding: const EdgeInsets.all(Sizes.small),
-                    child: Row(
-                      children: [
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.health_and_safety_rounded,
-                              size: Sizes.largeIcon,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: Sizes.medium),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                TextStrings.healthQuotes[random],
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                  fontSize: Sizes.largerFont,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              QuoteDisplayCard(random: random),
               Container(
                 padding: const EdgeInsets.all(Sizes.small),
                 child: Row(
@@ -152,13 +94,8 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              const SizedBox(height: Sizes.medium),
               StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('medicines')
-                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                    .collection('entries')
-                    .snapshots(),
+                stream: MedicineService.medicineSnapshots,
                 builder: (context, snapshot) {
                   if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
                     return const Center(
@@ -170,13 +107,7 @@ class _HomeState extends State<Home> {
                           (medicine) => medicine.data() as Map<String, dynamic>)
                       .toList();
 
-                  return ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var medicine in medicines.take(2))
-                        MedicineDisplayCard(medicineData: medicine),
-                    ],
-                  );
+                  return HomeDisplayCard(medicines: medicines);
                 },
               ),
             ],

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/detail_input.dart';
 import 'package:intl/intl.dart';
 
@@ -162,7 +163,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                         hint: time.toString(),
                         suffixIcon: IconButton(
                           onPressed: () {
-                            getTimeFromUser();
+                            MedicineService.getTimeFromUser(context, this);
                           },
                           icon: const Icon(Icons.access_time_rounded),
                         ),
@@ -176,7 +177,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                         hint: selectedDate.toString(),
                         suffixIcon: IconButton(
                           onPressed: () {
-                            getDateFromUser();
+                            MedicineService.getDateFromUser(context, this);
                           },
                           icon: const Icon(Icons.calendar_today_rounded),
                         ),
@@ -205,45 +206,6 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> getDateFromUser() async {
-    DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2013),
-      lastDate: DateTime(2130),
-    );
-
-    if (date != null) {
-      setState(() {
-        selectedDate = DateFormat.yMd().format(date);
-      });
-    }
-  }
-
-  Future<void> getTimeFromUser() async {
-    var pickedTime = await getTimePicker();
-    DateTime now = DateTime.now();
-    DateTime selectedDateTime = DateTime(
-      now.day,
-      now.month,
-      now.year,
-      pickedTime!.hour,
-      pickedTime.minute,
-    );
-    var formattedTime = DateFormat("hh:mm a").format(selectedDateTime);
-    setState(() {
-      time = formattedTime;
-    });
-  }
-
-  Future<TimeOfDay?> getTimePicker() async {
-    return showTimePicker(
-      context: context,
-      initialEntryMode: TimePickerEntryMode.input,
-      initialTime: TimeOfDay.now(),
     );
   }
 

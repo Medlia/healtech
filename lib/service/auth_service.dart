@@ -158,6 +158,25 @@ class AuthService {
     }
   }
 
+  static Future<void> saveUserDetails(
+      BuildContext context, String gender, String age, String weight) async {
+    await FirebaseFirestore.instance
+        .collection('details')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .set(
+      {
+        'gender': gender,
+        'age': age,
+        'weight': weight,
+      },
+    );
+    if (!context.mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      '/navbar',
+      (route) => false,
+    );
+  }
+
   static Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     if (!context.mounted) return;

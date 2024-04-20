@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/add_medicines.dart';
-import 'package:healtech/service/medication_service.dart';
+import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/medicine_display_card.dart';
 import 'package:intl/intl.dart';
 
@@ -16,14 +15,12 @@ class MedicineSchedule extends StatefulWidget {
 }
 
 class _MedicineScheduleState extends State<MedicineSchedule> {
-  late final MedicationService medicationService;
   late final CollectionReference medicinesCollection;
   DateTime _selectedDate = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    medicationService = MedicationService();
     medicinesCollection = FirebaseFirestore.instance.collection('medicines');
   }
 
@@ -128,11 +125,7 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
               const SizedBox(height: Sizes.tileSpace),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('medicines')
-                      .doc(FirebaseAuth.instance.currentUser?.uid)
-                      .collection('entries')
-                      .snapshots(),
+                  stream: MedicineService.medicineSnapshots,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -205,7 +198,8 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                                 ),
                               );
                             },
-                            child: MedicineDisplayCard(medicineData: medicineData),
+                            child:
+                                MedicineDisplayCard(medicineData: medicineData),
                           );
                         } else {
                           return Container();
@@ -222,4 +216,3 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
     );
   }
 }
-
