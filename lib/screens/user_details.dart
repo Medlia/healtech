@@ -53,7 +53,7 @@ class _UserDetailsState extends State<UserDetails> {
         child: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+            padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 0),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,7 @@ class _UserDetailsState extends State<UserDetails> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize:
-                          Theme.of(context).textTheme.displaySmall?.fontSize,
+                          Theme.of(context).textTheme.headlineMedium?.fontSize,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/colors.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/add_appointment.dart';
+import 'package:healtech/widgets/appointment_display_card.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Appointment extends StatefulWidget {
@@ -27,25 +29,15 @@ class _AppointmentState extends State<Appointment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(
-            top: Sizes.small,
-          ),
-          child: Text(
-            "Appointments",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
-              fontWeight: FontWeight.w600,
-            ),
+        title: Text(
+          "Appointments",
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       floatingActionButton: IconButton.filled(
-        style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(
-            Color(0xFF5c6bc0),
-          ),
-        ),
         iconSize: Sizes.largerIcon,
         onPressed: () {
           Navigator.push(
@@ -57,21 +49,23 @@ class _AppointmentState extends State<Appointment> {
             ),
           );
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.add_rounded,
-          color: Theme.of(context).colorScheme.inverseSurface,
+          size: Sizes.largeIcon,
         ),
       ),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Column(
             children: [
               TableCalendar(
                 focusedDay: today,
                 firstDay: DateTime.utc(2013),
                 lastDay: DateTime.utc(2130),
+                rowHeight: Sizes.rowHeight,
+                daysOfWeekHeight: Sizes.large,
                 calendarFormat: CalendarFormat.month,
                 selectedDayPredicate: (day) {
                   return isSameDay(day, today);
@@ -91,14 +85,13 @@ class _AppointmentState extends State<Appointment> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                daysOfWeekHeight: Sizes.large,
                 daysOfWeekStyle: const DaysOfWeekStyle(
                   weekdayStyle: TextStyle(
                     fontSize: Sizes.largeFont,
                     fontWeight: FontWeight.w500,
                   ),
                   weekendStyle: TextStyle(
-                    color: Color(0xFF6A6A6A),
+                    color: CustomColors.darkGrey,
                     fontSize: Sizes.largeFont,
                     fontWeight: FontWeight.w500,
                   ),
@@ -195,104 +188,7 @@ class _AppointmentState extends State<Appointment> {
                                 ),
                               );
                             },
-                            child: Container(
-                              padding: const EdgeInsets.all(Sizes.small),
-                              height: Sizes.reportCardHeight,
-                              child: Card(
-                                child: ListTile(
-                                  title: Text(
-                                    appointmentData['doctor\'s name'],
-                                    style: const TextStyle(
-                                      fontSize: Sizes.largerFont,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Description: ${appointmentData['description']}',
-                                        style: const TextStyle(
-                                          fontSize: Sizes.mediumFont,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Time: ${appointmentData['time']}',
-                                        style: const TextStyle(
-                                          fontSize: Sizes.mediumFont,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Date: ${appointmentData['date']}',
-                                        style: const TextStyle(
-                                          fontSize: Sizes.mediumFont,
-                                        ),
-                                      ),
-                                      const SizedBox(height: Sizes.tileSpace),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                barrierColor: Theme.of(context)
-                                                    .colorScheme
-                                                    .scrim,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Dialog(
-                                                    child: Image.network(
-                                                      appointmentData[
-                                                          'reports'],
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Image.network(
-                                              appointmentData['reports'],
-                                              height: Sizes.imageHeight,
-                                              width: Sizes.imageWidth,
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                barrierColor: Theme.of(context)
-                                                    .colorScheme
-                                                    .scrim,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Dialog(
-                                                    child: Image.network(
-                                                      appointmentData[
-                                                          'prescription'],
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Image.network(
-                                              appointmentData['prescription'],
-                                              height: Sizes.imageHeight,
-                                              width: Sizes.imageWidth,
-                                              fit: BoxFit.fill,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: AppointmentDisplayCard(appointmentData: appointmentData),
                           );
                         } else {
                           return Container();

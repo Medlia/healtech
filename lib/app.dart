@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:healtech/screens/chat.dart';
 import 'package:healtech/screens/email_verification.dart';
-import 'package:healtech/screens/forget_password.dart';
+import 'package:healtech/screens/reset_password.dart';
 import 'package:healtech/screens/medicine_schedule.dart';
 import 'package:healtech/screens/navbar.dart';
-// import 'package:healtech/screens/onboarding.dart';
+import 'package:healtech/screens/onboarding.dart';
 import 'package:healtech/screens/signin.dart';
 import 'package:healtech/screens/signup.dart';
 import 'package:healtech/screens/user_details.dart';
@@ -27,12 +27,12 @@ class MyApp extends StatelessWidget {
               email: '',
             ),
         '/userdetails': (context) => const UserDetails(),
-        '/forgetpassword': (context) => const ForgetPassword(),
+        '/forgetpassword': (context) => const ResetPassword(),
         '/navbar': (context) => const NavBar(),
         '/medicineschedule': (context) => const MedicineSchedule(),
         '/chat': (context) => const Chat(),
       },
-      home: const NavBar(),
+      home: const OnBoarding(),
     );
   }
 }

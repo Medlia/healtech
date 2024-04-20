@@ -3,19 +3,19 @@ import 'package:healtech/constants/colors.dart';
 
 class CustomTheme {
   static ThemeData light = ThemeData(
-    scaffoldBackgroundColor: CustomColors.light,
     colorScheme: ColorScheme.fromSeed(
-       brightness: Brightness.light,
+      brightness: Brightness.light,
       seedColor: CustomColors.primaryColor,
+      primary: CustomColors.primaryColor,
     ),
-    useMaterial3: true
+    useMaterial3: true,
   );
 
   static ThemeData dark = ThemeData(
-    scaffoldBackgroundColor: CustomColors.dark,
     colorScheme: ColorScheme.fromSeed(
       brightness: Brightness.dark,
       seedColor: CustomColors.primaryAccentColor,
+      primary: CustomColors.primaryAccentColor,
     ),
     useMaterial3: true,
   );

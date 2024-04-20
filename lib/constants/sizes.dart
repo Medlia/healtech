@@ -31,6 +31,7 @@ class Sizes {
   static const double appBarHeight = 56.0;
 
   // Image Size
+  static const double rowHeight = 45.0;
   static const double avatarRadius = 56.0;
   static const double largestHeight = 80.0;
   static const double imageHeight = 100.0;
@@ -56,8 +57,8 @@ class Sizes {
   static const double elevation = 2.0;
 
   // Calender sizes
-  static const double calendarHeight = 100.0;
-  static const double calendarWidth = 80.0;
+  static const double calendarHeight = 92.0;
+  static const double calendarWidth = 60.0;
 
   // Grid Spacing
   static const double gridAxisSpacing = 10.0;

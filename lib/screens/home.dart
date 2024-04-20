@@ -1,8 +1,12 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/chat.dart';
 import 'package:healtech/constants/text_strings.dart';
+import 'package:healtech/screens/medicine_list.dart';
+import 'package:healtech/widgets/medicine_display_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -54,23 +58,18 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(
-            top: Sizes.small,
-          ),
-          child: Text(
-            "Home",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
-              fontWeight: FontWeight.w600,
-            ),
+        title: Text(
+          "Home",
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -120,15 +119,66 @@ class _HomeState extends State<Home> {
               ),
               Container(
                 padding: const EdgeInsets.all(Sizes.small),
-                child: Text(
-                  "Medicines",
-                  style: TextStyle(
-                    fontSize:
-                        Theme.of(context).textTheme.headlineMedium?.fontSize,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "Medicines",
+                      style: TextStyle(
+                        fontSize: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.fontSize,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const MedicineList(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "See all",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize:
+                              Theme.of(context).textTheme.labelLarge?.fontSize,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: Sizes.medium),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('medicines')
+                    .doc(FirebaseAuth.instance.currentUser?.uid)
+                    .collection('entries')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text('No medicines added yet.'),
+                    );
+                  }
+                  var medicines = snapshot.data!.docs
+                      .map(
+                          (medicine) => medicine.data() as Map<String, dynamic>)
+                      .toList();
+
+                  return ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (var medicine in medicines.take(2))
+                        MedicineDisplayCard(medicineData: medicine),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),

@@ -74,16 +74,11 @@ class _ReportAnalysisState extends State<ReportAnalysis> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(
-            top: 8,
-          ),
-          child: Text(
-            "Report Analysis",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
-              fontWeight: FontWeight.w600,
-            ),
+        title: Text(
+          "Report Analysis",
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
+            fontWeight: FontWeight.w600,
           ),
         ),
         actions: [
@@ -137,7 +132,7 @@ class _ReportAnalysisState extends State<ReportAnalysis> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Column(
             children: [
               Expanded(

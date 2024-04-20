@@ -77,7 +77,7 @@ class OnBoardingState extends State<OnBoarding> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize:
-                          Theme.of(context).textTheme.displaySmall?.fontSize,
+                          Theme.of(context).textTheme.headlineLarge?.fontSize,
                     ),
                   ),
                   const SizedBox(height: Sizes.largeSpace),

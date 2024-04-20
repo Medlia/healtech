@@ -9,6 +9,7 @@ class DetailField extends StatefulWidget {
   final Widget? suffixIcon;
   final TextEditingController controller;
   final bool? readOnly;
+  final TextCapitalization? textCapitalization;
   const DetailField({
     super.key,
     required this.controller,
@@ -18,6 +19,7 @@ class DetailField extends StatefulWidget {
     this.suffixIcon,
     this.suffixText,
     this.readOnly,
+    this.textCapitalization,
   });
 
   @override
@@ -37,7 +39,7 @@ class _DetailFieldState extends State<DetailField> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: Sizes.tileSpace),
+        const SizedBox(height: Sizes.tileSpace / 2),
         Row(
           children: [
             Expanded(
@@ -47,13 +49,15 @@ class _DetailFieldState extends State<DetailField> {
                   controller: widget.controller,
                   keyboardType: widget.type,
                   readOnly: widget.readOnly ?? false,
-                  textCapitalization: TextCapitalization.words,
+                  textCapitalization:
+                      widget.textCapitalization ?? TextCapitalization.none,
                   decoration: InputDecoration(
                     hintText: widget.hint,
                     suffixText: widget.suffixText,
                     suffixIcon: widget.suffixIcon,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(Sizes.fieldBorderRadius),
+                      borderRadius:
+                          BorderRadius.circular(Sizes.fieldBorderRadius),
                     ),
                   ),
                 ),

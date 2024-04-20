@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/screens/forget_password.dart';
+import 'package:healtech/screens/reset_password.dart';
 import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
 
@@ -49,7 +49,7 @@ class _SigninState extends State<Signin> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,6 @@ class _SigninState extends State<Signin> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: Sizes.verySmall),
                 Text(
                   "Enter your email and password to sign in",
                   style: TextStyle(
@@ -82,7 +81,7 @@ class _SigninState extends State<Signin> {
                   labelText: 'Email',
                   autoCorrect: false,
                 ),
-                const SizedBox(height: Sizes.sectionSpace),
+                const SizedBox(height: Sizes.tileSpace),
                 CustomTextField(
                   controller: _password,
                   icon: const Icon(Icons.lock_rounded),
@@ -128,12 +127,12 @@ class _SigninState extends State<Signin> {
                     ),
                   ),
                 ),
-                const SizedBox(height: Sizes.tileSpace),
+                const SizedBox(height: Sizes.tileSpace / 2),
                 InkWell(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const ForgetPassword(),
+                        builder: (context) => const ResetPassword(),
                       ),
                     );
                   },

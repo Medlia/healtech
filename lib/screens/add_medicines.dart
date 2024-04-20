@@ -92,6 +92,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                 DetailField(
                   controller: _name,
                   type: TextInputType.text,
+                  textCapitalization: TextCapitalization.words,
                   title: 'Medicine Name',
                   hint: "Enter medicine's name",
                 ),
@@ -99,6 +100,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                 DetailField(
                   controller: _description,
                   type: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
                   title: 'Description',
                   hint: "Enter the description",
                 ),
@@ -106,12 +108,14 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                 DetailField(
                   controller: _doctorName,
                   type: TextInputType.text,
+                  textCapitalization: TextCapitalization.words,
                   title: 'Doctor Name',
                   hint: "Enter the doctor's name",
                 ),
                 const SizedBox(height: Sizes.sectionSpace),
                 DetailField(
                   controller: _type,
+                  textCapitalization: TextCapitalization.sentences,
                   title: 'Type',
                   hint: "Enter the type of medicine",
                 ),
@@ -143,6 +147,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                 DetailField(
                   controller: _foodTime,
                   type: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
                   title: 'Food Time',
                   hint: "Before/After",
                 ),
@@ -259,6 +264,20 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
         'time': time,
         'duration': selectedDate,
       },
+    );
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+        content: Text(
+          "Medicine saved!",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.inverseSurface,
+            fontSize: Sizes.mediumFont,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
     );
   }
 }

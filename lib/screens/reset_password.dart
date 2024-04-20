@@ -3,14 +3,14 @@ import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<ResetPassword> createState() => _ForgetPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _ForgetPasswordState extends State<ResetPassword> {
   late final TextEditingController _email;
 
   @override
@@ -34,7 +34,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             top: Sizes.small,
           ),
           child: Text(
-            "Forget Password",
+            "Reset Password",
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
               fontWeight: FontWeight.w600,
@@ -44,7 +44,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

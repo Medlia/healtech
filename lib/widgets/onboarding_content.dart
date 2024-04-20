@@ -61,7 +61,7 @@ class OnBoardingContent extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.displaySmall?.fontSize,
+              fontSize: Theme.of(context).textTheme.headlineLarge?.fontSize,
             ),
           ),
           const SizedBox(height: Sizes.verySmall),
@@ -69,7 +69,7 @@ class OnBoardingContent extends StatelessWidget {
             description ?? "",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+              fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
               fontWeight: FontWeight.w400,
             ),
           ),

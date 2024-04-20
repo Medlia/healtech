@@ -48,7 +48,7 @@ class _SignUpState extends State<SignUp> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,6 @@ class _SignUpState extends State<SignUp> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: Sizes.verySmall),
                 Text(
                   "Enter your email and password to sign up",
                   style: TextStyle(
@@ -81,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                   labelText: 'Email',
                   autoCorrect: false,
                 ),
-                const SizedBox(height: Sizes.largeSpace),
+                const SizedBox(height: Sizes.tileSpace),
                 CustomTextField(
                   controller: _password,
                   icon: const Icon(Icons.lock_rounded),

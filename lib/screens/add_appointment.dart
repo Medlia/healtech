@@ -136,6 +136,20 @@ class _AddAppointmentState extends State<AddAppointment> {
         'prescription': prescriptionURL,
       },
     );
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+        content: Text(
+          "Appointment saved!",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.inverseSurface,
+            fontSize: Sizes.mediumFont,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -160,7 +174,7 @@ class _AddAppointmentState extends State<AddAppointment> {
           scrollDirection: Axis.vertical,
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 8.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
             child: Column(
               children: [
                 Text(
@@ -175,6 +189,7 @@ class _AddAppointmentState extends State<AddAppointment> {
                 DetailField(
                   controller: _doctorName,
                   type: TextInputType.text,
+                  textCapitalization: TextCapitalization.words,
                   title: 'Doctor\'s name',
                   hint: "Enter doctor's name",
                 ),
@@ -213,6 +228,7 @@ class _AddAppointmentState extends State<AddAppointment> {
                 DetailField(
                   controller: _description,
                   type: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
                   title: 'Description',
                   hint: "Enter description",
                 ),
@@ -259,7 +275,8 @@ class _AddAppointmentState extends State<AddAppointment> {
                     const SizedBox(width: Sizes.buttonHeight),
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Sizes.fieldBorderRadius),
+                        borderRadius:
+                            BorderRadius.circular(Sizes.fieldBorderRadius),
                         border: Border.all(
                           color: Colors.grey.shade400,
                         ),

@@ -23,7 +23,7 @@ class _NavBarState extends State<NavBar> {
     const Profile(),
   ];
 
-  late int selectedIndex = 0;
+  int selectedIndex = 0;
 
   @override
   void initState() {
@@ -49,6 +49,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: screens[selectedIndex],
       bottomNavigationBar: NavigationBar(
         elevation: Sizes.tileSpace,

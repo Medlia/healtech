@@ -35,7 +35,7 @@ class _EmailVerifyState extends State<EmailVerify> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +50,6 @@ class _EmailVerifyState extends State<EmailVerify> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: Sizes.tileSpace),
                 TextButton(
                   onPressed: () async {
                     await AuthService.emailVerification(context);

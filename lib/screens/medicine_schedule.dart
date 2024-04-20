@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/add_medicines.dart';
 import 'package:healtech/service/medication_service.dart';
+import 'package:healtech/widgets/medicine_display_card.dart';
 import 'package:intl/intl.dart';
 
 class MedicineSchedule extends StatefulWidget {
@@ -30,23 +31,18 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(
-            top: Sizes.small,
-          ),
-          child: Text(
-            "Medicine Schedule",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
-              fontWeight: FontWeight.w600,
-            ),
+        title: Text(
+          "Medicine Schedule",
+          style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headlineMedium?.fontSize,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
+          padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -209,93 +205,7 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                                 ),
                               );
                             },
-                            child: Container(
-                              padding: const EdgeInsets.all(Sizes.small),
-                              height: Sizes.medicineCardHeight,
-                              child: Card(
-                                child: ListTile(
-                                  title: Text(
-                                    medicineData['name'],
-                                    style: const TextStyle(
-                                      fontSize: Sizes.largeFont,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Description: ${medicineData['description']}',
-                                        style: const TextStyle(
-                                          fontSize: Sizes.mediumFont,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Doctor\'s Name: ${medicineData['doctor\'s name']}',
-                                        style: const TextStyle(
-                                          fontSize: Sizes.mediumFont,
-                                        ),
-                                      ),
-                                      const SizedBox(height: Sizes.verySmall),
-                                      Row(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Type: ${medicineData['type']}',
-                                                style: const TextStyle(
-                                                  fontSize: Sizes.mediumFont,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Dosage: ${medicineData['dosage']} mg',
-                                                style: const TextStyle(
-                                                  fontSize: Sizes.mediumFont,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Food Time: ${medicineData['food time']}',
-                                                style: const TextStyle(
-                                                  fontSize: Sizes.mediumFont,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Duration: ${medicineData['duration']}',
-                                                style: const TextStyle(
-                                                  fontSize: Sizes.mediumFont,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Quantity: ${medicineData['quantity']}',
-                                                style: const TextStyle(
-                                                  fontSize: Sizes.mediumFont,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Time: ${medicineData['time']}',
-                                                style: const TextStyle(
-                                                  fontSize: Sizes.mediumFont,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: MedicineDisplayCard(medicineData: medicineData),
                           );
                         } else {
                           return Container();
@@ -312,3 +222,4 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
     );
   }
 }
+
