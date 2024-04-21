@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/colors.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/detail_input.dart';
@@ -81,10 +82,10 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
             padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "All the fields are mandatory",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onErrorContainer,
+                    color: CustomColors.errorColor,
                     fontSize: Sizes.smallFont,
                     fontStyle: FontStyle.italic,
                   ),
@@ -110,7 +111,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
                   controller: _doctorName,
                   type: TextInputType.text,
                   textCapitalization: TextCapitalization.words,
-                  title: 'Doctor Name',
+                  title: 'Doctor\'s Name',
                   hint: "Enter the doctor's name",
                 ),
                 const SizedBox(height: Sizes.sectionSpace),

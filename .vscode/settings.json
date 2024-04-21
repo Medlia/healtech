@@ -1,4 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "docwriter.style": "Auto-detect"
+    "docwriter.style": "Auto-detect",
+    "cSpell.words": [
+        "analyzereports"
+    ]
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Analyze extends StatefulWidget {
-  final String image;
   const Analyze({
     super.key,
-    required this.image,
   });
 
   @override
@@ -35,17 +33,7 @@ class _AnalyzeState extends State<Analyze> {
           padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.network(
-                widget.image,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: () {},
-                child: const Text("Analyze"),
-              ),
-            ],
+            children: [],
           ),
         ),
       ),

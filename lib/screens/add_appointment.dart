@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/colors.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/widgets/detail_input.dart';
 import 'package:image_picker/image_picker.dart';
@@ -177,10 +178,10 @@ class _AddAppointmentState extends State<AddAppointment> {
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "All the fields are mandatory",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onErrorContainer,
+                    color: CustomColors.errorColor,
                     fontSize: Sizes.smallFont,
                     fontStyle: FontStyle.italic,
                   ),
