@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/auth/auth_exceptions.dart';
 import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
+import 'package:healtech/widgets/error_dialog.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -97,12 +99,42 @@ class _SigninState extends State<Signin> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      if (!context.mounted) return;
-                      await AuthService.signin(
-                        context,
-                        _email.text,
-                        _password.text,
-                      );
+                      final email = _email.text;
+                      final password = _password.text;
+                      try {
+                        await AuthService.firebase().signIn(
+                          email: email,
+                          password: password,
+                        );
+                        final user = AuthService.firebase().currentUser;
+                        if (!context.mounted) return;
+                        if (user!.isEmailVerified) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            navBarRoute,
+                            (route) => false,
+                          );
+                        } else {
+                          Navigator.of(context).pushNamed(verifyEmailRoute);
+                        }
+                      } on UserNotFoundException {
+                        showErrorDialog(
+                          context,
+                          "User not found",
+                          "Sign up to create your account",
+                        );
+                      } on WrongPasswordException {
+                        showErrorDialog(
+                          context,
+                          "Wrong password",
+                          "Enter the right password to sign in",
+                        );
+                      } on GenericException {
+                        showErrorDialog(
+                          context,
+                          "An exception occurred",
+                          "Try signing in again",
+                        );
+                      }
                     },
                     child: const Text(
                       "Sign in",

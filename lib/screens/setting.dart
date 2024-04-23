@@ -98,7 +98,7 @@ class _SettingState extends State<Setting> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      AuthService.signOut(context);
+                      await AuthService.firebase().signOut();
                     },
                     child: const Text(
                       "Log out",

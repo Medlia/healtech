@@ -53,6 +53,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                 ),
                 Text(
                   "The verification email has been sent. Please check your inbox.",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
                     fontWeight: FontWeight.w400,
@@ -60,14 +61,15 @@ class _EmailVerifyState extends State<EmailVerify> {
                 ),
                 Text(
                   "If you have not received the email, tap the button below to receive the email.",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.titleSmall?.fontSize,
+                    fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 TextButton(
                   onPressed: () async {
-                    await AuthService.emailVerification(context);
+                    await AuthService.firebase().sendEmailVerification();
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

@@ -83,9 +83,9 @@ class _ForgetPasswordState extends State<ResetPassword> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      await AuthService.forgetPassword(
-                        context,
-                        _email.text,
+                      final email = _email.text;
+                      await AuthService.firebase().resetPassword(
+                        email: email,
                       );
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(

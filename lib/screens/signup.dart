@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/auth/auth_exceptions.dart';
 import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
+import 'package:healtech/widgets/error_dialog.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -97,11 +99,46 @@ class _SignUpState extends State<SignUp> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      await AuthService.signup(
-                        context,
-                        _email.text,
-                        _password.text,
-                      );
+                      final email = _email.text;
+                      final password = _password.text;
+                      try {
+                        await AuthService.firebase().signUp(
+                          email: email,
+                          password: password,
+                        );
+                        final user = AuthService.firebase().currentUser;
+                        if (!context.mounted) return;
+                        if (user!.isEmailVerified) {
+                          Navigator.of(context).pushNamed(userDetailsRoute);
+                        } else {
+                          AuthService.firebase().sendEmailVerification();
+                          Navigator.of(context).pushNamed(verifyEmailRoute);
+                        }
+                      } on InvalidEmailException {
+                        showErrorDialog(
+                          context,
+                          "Invalid email",
+                          "Enter a valid email address",
+                        );
+                      } on WeakPasswordException {
+                        showErrorDialog(
+                          context,
+                          "Weak password",
+                          "Enter a password with more than 6 characters",
+                        );
+                      } on EmailAlreadyInUseException {
+                        showErrorDialog(
+                          context,
+                          "Email already in use",
+                          "Proceed to sign in using this email",
+                        );
+                      } on GenericException {
+                        showErrorDialog(
+                          context,
+                          "An exception occurred",
+                          "Try signing up again",
+                        );
+                      }
                     },
                     child: const Text(
                       "Sign up",
