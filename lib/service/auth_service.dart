@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
-import 'package:healtech/screens/email_verification.dart';
 import 'package:healtech/widgets/error_dialog.dart';
 
 class AuthService {
@@ -23,13 +22,8 @@ class AuthService {
         },
       );
       if (!context.mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => EmailVerify(
-            email: email,
-          ),
-        ),
-      );
+      emailVerification(context);
+      Navigator.of(context).pushNamed(verifyEmailRoute);
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) return;
       if (e.code == 'invalid-email') {

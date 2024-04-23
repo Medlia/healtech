@@ -32,7 +32,9 @@ class MyApp extends StatelessWidget {
         medicineScheduleRoute: (context) => const MedicineSchedule(),
         chatRoute: (context) => const Chat(),
       },
-      home: const NavBar(),
+      home: const EmailVerify(
+        email: '',
+      ),
     );
   }
 }
