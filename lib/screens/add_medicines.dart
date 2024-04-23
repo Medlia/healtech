@@ -242,5 +242,6 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
         ),
       ),
     );
+    Navigator.pop(context);
   }
 }

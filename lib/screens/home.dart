@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/screens/chat.dart';
-import 'package:healtech/screens/medicine_list.dart';
 import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/medicine_display_card.dart';
 import 'package:healtech/widgets/quote_display_card.dart';
@@ -23,11 +22,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const Chat(),
-            ),
-          );
+          Navigator.of(context).pushNamed(chatRoute);
         },
         child: Container(
           height: Sizes.settingTileHeight,
@@ -76,11 +71,7 @@ class _HomeState extends State<Home> {
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const MedicineList(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamed(medicineListRoute);
                       },
                       child: Text(
                         "See all",

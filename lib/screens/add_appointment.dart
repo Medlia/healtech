@@ -151,6 +151,7 @@ class _AddAppointmentState extends State<AddAppointment> {
         ),
       ),
     );
+    Navigator.pop(context);
   }
 
   @override

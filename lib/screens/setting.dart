@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/screens/about.dart';
-import 'package:healtech/screens/edit_profile.dart';
-import 'package:healtech/screens/help.dart';
-import 'package:healtech/screens/notification.dart';
-import 'package:healtech/screens/privacy.dart';
-import 'package:healtech/screens/security.dart';
-import 'package:healtech/screens/terms_and_policies.dart';
 import 'package:healtech/service/auth_service.dart';
 import 'package:healtech/widgets/setting_item.dart';
 
@@ -46,11 +40,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.edit_rounded,
                 text: "Edit Profile",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const EditProfile(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(editProfileRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),
@@ -58,11 +48,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.security_rounded,
                 text: "Security",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Security(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(securityRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),
@@ -70,11 +56,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.notifications_rounded,
                 text: "Notification",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Notifications(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(notificationRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),
@@ -82,11 +64,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.privacy_tip_rounded,
                 text: "Privacy",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Privacy(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(privacyRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),
@@ -94,11 +72,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.help_rounded,
                 text: "Help",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const Help(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(helpRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),
@@ -106,11 +80,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.question_answer_rounded,
                 text: "About",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const About(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(aboutRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),
@@ -118,11 +88,7 @@ class _SettingState extends State<Setting> {
                 icon: Icons.rule_rounded,
                 text: "Terms and Policies",
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const TermsAndPolicies(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(termAndPolicyRoute);
                 },
               ),
               const SizedBox(height: Sizes.tileSpace),

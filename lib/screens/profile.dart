@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/screens/setting.dart';
 import 'package:healtech/service/profile_service.dart';
 import 'package:healtech/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -90,11 +90,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const Setting(),
-                      ),
-                    );
+                    Navigator.of(context).pushNamed(settingRoute);
                   },
                   icon: const Icon(Icons.settings_rounded),
                 ),
@@ -136,7 +132,8 @@ class _ProfileState extends State<Profile> {
                                   backgroundBlendMode: BlendMode.color,
                                   color:
                                       Theme.of(context).colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(Sizes.profileBorderRadius),
+                                  borderRadius: BorderRadius.circular(
+                                      Sizes.profileBorderRadius),
                                 ),
                                 child: Icon(
                                   Icons.edit,
@@ -190,7 +187,8 @@ class _ProfileState extends State<Profile> {
                                     width: double.infinity / 2,
                                     child: Card(
                                       child: Container(
-                                        padding: const EdgeInsets.all(Sizes.medium),
+                                        padding:
+                                            const EdgeInsets.all(Sizes.medium),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -224,7 +222,8 @@ class _ProfileState extends State<Profile> {
                                     width: double.infinity / 2,
                                     child: Card(
                                       child: Container(
-                                        padding: const EdgeInsets.all(Sizes.medium),
+                                        padding:
+                                            const EdgeInsets.all(Sizes.medium),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
