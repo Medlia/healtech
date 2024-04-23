@@ -4,7 +4,7 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:healtech/app.dart';
 import 'package:healtech/constants/api_key.dart';
 import 'package:healtech/firebase_options.dart';
-import 'package:healtech/theme/theme_provider.dart';
+import 'package:healtech/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {

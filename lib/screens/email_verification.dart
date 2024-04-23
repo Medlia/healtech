@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/service/auth_service.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 
 class EmailVerify extends StatefulWidget {
   final String email;

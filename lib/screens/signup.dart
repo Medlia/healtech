@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/service/auth_service.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/widgets/custom_textfield.dart';
 
 class SignUp extends StatefulWidget {

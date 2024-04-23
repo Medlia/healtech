@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/service/profile_service.dart';
-import 'package:healtech/theme/theme_provider.dart';
+import 'package:healtech/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {

@@ -8,7 +8,7 @@ import 'package:healtech/screens/navbar.dart';
 import 'package:healtech/screens/signin.dart';
 import 'package:healtech/screens/signup.dart';
 import 'package:healtech/screens/user_details.dart';
-import 'package:healtech/theme/theme_provider.dart';
+import 'package:healtech/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
