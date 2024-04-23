@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AuthService.firebase().initialize();
-  Gemini.init(apiKey: APIConstant.apiKey);
+  Gemini.init(apiKey: apiKey);
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
