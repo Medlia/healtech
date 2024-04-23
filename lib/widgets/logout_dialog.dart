@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 
 Future<void> showLogOutDialog(BuildContext context) async {
   return showDialog(
@@ -22,7 +22,7 @@ Future<void> showLogOutDialog(BuildContext context) async {
           ),
           FilledButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              AuthService.firebase().signOut();
               Navigator.of(context).pushNamedAndRemoveUntil(
                 signInRoute,
                 (route) => false,

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
@@ -99,9 +98,11 @@ class _EmailVerifyState extends State<EmailVerify> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      User user = FirebaseAuth.instance.currentUser!;
-                      user.reload();
-                      if (user.emailVerified) {
+                      var user = AuthService.firebase().currentUser;
+                      await AuthService.firebase().reloadCurrentUser();
+                      user = AuthService.firebase().currentUser;
+                      if (!context.mounted) return;
+                      if (user!.isEmailVerified) {
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           userDetailsRoute,
                           (route) => false,

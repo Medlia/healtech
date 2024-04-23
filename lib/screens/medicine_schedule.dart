@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
-import 'package:healtech/screens/add_medicines.dart';
 import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/medicine_display_card.dart';
 import 'package:intl/intl.dart';
@@ -75,12 +75,7 @@ class _MedicineScheduleState extends State<MedicineSchedule> {
                     const Spacer(),
                     FilledButton.icon(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MedicineDetailInput(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamed(addMedicineRoute);
                       },
                       icon: const Icon(
                         Icons.add_rounded,

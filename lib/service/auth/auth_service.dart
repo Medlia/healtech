@@ -47,4 +47,10 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> initialize() => provider.initialize();
+
+  @override
+  Future<void> reloadCurrentUser() => provider.reloadCurrentUser();
+
+  @override
+  String? get uid => provider.uid;
 }

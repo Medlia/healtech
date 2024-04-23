@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/service/profile_service.dart';
 import 'package:healtech/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +41,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: details.doc(FirebaseAuth.instance.currentUser!.uid).get(),
+      future: details.doc(AuthService.firebase().currentUser!.uid).get(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(

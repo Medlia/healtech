@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/colors.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/add_appointment.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/widgets/appointment_display_card.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -113,7 +113,7 @@ class _AppointmentState extends State<Appointment> {
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: appointmentCollection
-                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .doc(AuthService.firebase().currentUser!.uid)
                       .collection('entries')
                       .snapshots(),
                   builder: (context, snapshot) {

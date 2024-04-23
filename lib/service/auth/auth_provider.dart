@@ -7,6 +7,7 @@ import 'package:healtech/service/auth/auth_user.dart';
 abstract class AuthProvider {
   Future<void> initialize();
   AuthUser? get currentUser;
+  String? get uid;
 
   Future<AuthUser> signUp({
     required String email,
@@ -21,6 +22,8 @@ abstract class AuthProvider {
   Future<void> signOut();
 
   Future<void> sendEmailVerification();
+
+  Future<void> reloadCurrentUser();
 
   Future<AuthUser> resetPassword({required String email});
 }

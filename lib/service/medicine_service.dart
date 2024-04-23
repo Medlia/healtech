@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 import 'package:intl/intl.dart';
 
 class MedicineService {
   static final Stream<QuerySnapshot> medicineSnapshots = FirebaseFirestore
       .instance
       .collection('medicines')
-      .doc(FirebaseAuth.instance.currentUser?.uid)
+      .doc(AuthService.firebase().currentUser?.uid)
       .collection('entries')
       .snapshots();
 
   static final Stream<QuerySnapshot> orderedMedicineSnapshots =
       FirebaseFirestore.instance
           .collection('medicines')
-          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .doc(AuthService.firebase().currentUser?.uid)
           .collection('entries')
           .orderBy('name', descending: false)
           .snapshots();

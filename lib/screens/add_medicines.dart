@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/colors.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/service/medicine_service.dart';
 import 'package:healtech/widgets/detail_input.dart';
 import 'package:intl/intl.dart';
 
-class MedicineDetailInput extends StatefulWidget {
-  const MedicineDetailInput({super.key});
+class AddMedicine extends StatefulWidget {
+  const AddMedicine({super.key});
 
   @override
-  State<MedicineDetailInput> createState() => _MedicineDetailInputState();
+  State<AddMedicine> createState() => _AddMedicineState();
 }
 
-class _MedicineDetailInputState extends State<MedicineDetailInput> {
+class _AddMedicineState extends State<AddMedicine> {
   DateTime today = DateTime.now();
   var time = DateFormat("hh:mm a").format(DateTime.now().toLocal());
   var selectedDate = DateFormat.yMd().format(DateTime.now());
@@ -213,7 +213,7 @@ class _MedicineDetailInputState extends State<MedicineDetailInput> {
   Future<void> saveMedicineDetails() async {
     await FirebaseFirestore.instance
         .collection('medicines')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .doc(AuthService.firebase().currentUser?.uid)
         .collection('entries')
         .add(
       {

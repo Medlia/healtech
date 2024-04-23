@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:healtech/constants/colors.dart';
 import 'package:healtech/constants/sizes.dart';
+import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/widgets/detail_input.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -125,7 +125,7 @@ class _AddAppointmentState extends State<AddAppointment> {
     }
     await FirebaseFirestore.instance
         .collection('appointment')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .doc(AuthService.firebase().currentUser?.uid)
         .collection('entries')
         .add(
       {
