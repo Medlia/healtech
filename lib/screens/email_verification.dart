@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/service/auth_service.dart';
 
@@ -87,7 +88,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                       user = FirebaseAuth.instance.currentUser!;
                       if (!context.mounted) return;
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/userdetails',
+                        userDetailsRoute,
                         (route) => false,
                       );
                       {

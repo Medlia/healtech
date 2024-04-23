@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/constants/sizes.dart';
 import 'package:healtech/screens/reset_password.dart';
 import 'package:healtech/service/auth_service.dart';
@@ -116,7 +117,7 @@ class _SigninState extends State<Signin> {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/signup',
+                      signUpRoute,
                       (route) => false,
                     );
                   },

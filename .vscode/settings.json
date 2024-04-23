@@ -2,6 +2,7 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "docwriter.style": "Auto-detect",
     "cSpell.words": [
-        "analyzereports"
+        "analyzereports",
+        "resetpassword"
     ]
 }

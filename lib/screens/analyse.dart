@@ -31,7 +31,7 @@ class _AnalyzeState extends State<Analyze> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [],
           ),

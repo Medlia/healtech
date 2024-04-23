@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/screens/chat.dart';
 import 'package:healtech/screens/email_verification.dart';
 import 'package:healtech/screens/reset_password.dart';
@@ -20,16 +21,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).theme,
       routes: {
-        '/signin': (context) => const Signin(),
-        '/signup': (context) => const SignUp(),
-        '/verify': (context) => const EmailVerify(
+        signInRoute: (context) => const Signin(),
+        signUpRoute: (context) => const SignUp(),
+        verifyEmailRoute: (context) => const EmailVerify(
               email: '',
             ),
-        '/userdetails': (context) => const UserDetails(),
-        '/forgetpassword': (context) => const ResetPassword(),
-        '/navbar': (context) => const NavBar(),
-        '/medicineschedule': (context) => const MedicineSchedule(),
-        '/chat': (context) => const Chat(),
+        userDetailsRoute: (context) => const UserDetails(),
+        resetPasswordRoute: (context) => const ResetPassword(),
+        navBarRoute: (context) => const NavBar(),
+        medicineScheduleRoute: (context) => const MedicineSchedule(),
+        chatRoute: (context) => const Chat(),
       },
       home: const NavBar(),
     );

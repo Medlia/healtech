@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healtech/constants/routes.dart';
 import 'package:healtech/screens/email_verification.dart';
 import 'package:healtech/widgets/error_dialog.dart';
 
@@ -75,7 +76,7 @@ class AuthService {
       );
       if (!context.mounted) return;
       Navigator.of(context).pushNamedAndRemoveUntil(
-        '/navbar',
+        navBarRoute,
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -172,7 +173,7 @@ class AuthService {
     );
     if (!context.mounted) return;
     Navigator.of(context).pushNamedAndRemoveUntil(
-      '/navbar',
+      navBarRoute,
       (route) => false,
     );
   }
@@ -181,7 +182,7 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
     if (!context.mounted) return;
     Navigator.of(context).pushNamedAndRemoveUntil(
-      '/signin',
+      signInRoute,
       (route) => false,
     );
   }
