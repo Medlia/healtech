@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:healtech/domain/usecases/save_user_details.dart';
+import 'package:healtech/presentation/controllers/auth/user_details_controller.dart';
 import 'package:healtech/core/routes.dart';
 import 'package:healtech/core/sizes.dart';
-import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/presentation/pages/auth/widgets/detail_card.dart';
 
 class UserDetails extends StatefulWidget {
@@ -13,25 +14,8 @@ class UserDetails extends StatefulWidget {
 }
 
 class _UserDetailsState extends State<UserDetails> {
-  late final TextEditingController _gender;
-  late final TextEditingController _age;
-  late final TextEditingController _weight;
-
-  @override
-  void initState() {
-    _gender = TextEditingController();
-    _age = TextEditingController();
-    _weight = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _gender.dispose();
-    _age.dispose();
-    _weight.dispose();
-    super.dispose();
-  }
+  final UserDetailsController controller =
+      Get.put(UserDetailsController(Get.find<SaveUserDetails>()));
 
   @override
   Widget build(BuildContext context) {
@@ -72,19 +56,19 @@ class _UserDetailsState extends State<UserDetails> {
                   ),
                   const SizedBox(height: Sizes.largeSpace),
                   DetailCard(
-                    controller: _gender,
+                    controller: controller.gender,
                     type: TextInputType.text,
                     detail: "Your Gender",
                   ),
                   const SizedBox(height: Sizes.sectionSpace),
                   DetailCard(
-                    controller: _age,
+                    controller: controller.age,
                     type: TextInputType.number,
                     detail: "Your Age",
                   ),
                   const SizedBox(height: Sizes.sectionSpace),
                   DetailCard(
-                    controller: _weight,
+                    controller: controller.weight,
                     type: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
@@ -96,16 +80,7 @@ class _UserDetailsState extends State<UserDetails> {
                     width: Sizes.buttonWidth,
                     child: FilledButton(
                       onPressed: () async {
-                        await FirebaseFirestore.instance
-                            .collection('details')
-                            .doc(AuthService.firebase().currentUser!.uid)
-                            .set(
-                          {
-                            'gender': _gender.text,
-                            'age': _age.text,
-                            'weight': _weight.text,
-                          },
-                        );
+                        await controller.saveDetails();
                         if (!context.mounted) return;
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           navBarRoute,

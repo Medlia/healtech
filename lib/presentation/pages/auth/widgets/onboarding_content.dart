@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:healtech/core/asset_strings.dart';
 import 'package:healtech/core/sizes.dart';
 import 'package:healtech/core/text_strings.dart';
-import 'package:healtech/data/models/content_model.dart';
+
+class Content {
+  final String title;
+  final String description;
+  final String image;
+
+  Content({
+    required this.title,
+    required this.description,
+    required this.image,
+  });
+}
 
 final List<Content> content = [
   Content(
@@ -72,4 +83,3 @@ class OnBoardingContent extends StatelessWidget {
     );
   }
 }
-
