@@ -4,11 +4,12 @@ import 'package:healtech/core/sizes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DotIndicator extends StatelessWidget {
-  final PageController _page;
+  final PageController page;
+
   const DotIndicator({
     super.key,
-    required PageController page,
-  }) : _page = page;
+    required this.page,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class DotIndicator extends StatelessWidget {
           const Spacer(),
           ElevatedButton(
             onPressed: () {
-              _page.previousPage(
+              page.previousPage(
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeInOut,
               );
@@ -36,7 +37,7 @@ class DotIndicator extends StatelessWidget {
           const Spacer(),
           Center(
             child: SmoothPageIndicator(
-              controller: _page,
+              controller: page,
               count: 5,
               effect: const WormEffect(
                 dotHeight: Sizes.tileSpace,
@@ -45,7 +46,7 @@ class DotIndicator extends StatelessWidget {
                 dotColor: CustomColors.primaryColor,
                 activeDotColor: CustomColors.primaryAccentColor,
               ),
-              onDotClicked: (index) => _page.animateToPage(
+              onDotClicked: (index) => page.animateToPage(
                 index,
                 duration: const Duration(
                   milliseconds: 500,
@@ -57,7 +58,7 @@ class DotIndicator extends StatelessWidget {
           const Spacer(),
           FilledButton(
             onPressed: () {
-              _page.nextPage(
+              page.nextPage(
                 duration: const Duration(
                   milliseconds: 500,
                 ),

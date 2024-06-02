@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:healtech/core/sizes.dart';
+import 'package:healtech/presentation/controllers/auth/reset_password_controller.dart';
 import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/presentation/pages/auth/widgets/custom_textfield.dart';
 
@@ -11,19 +13,7 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ResetPassword> {
-  late final TextEditingController _email;
-
-  @override
-  void initState() {
-    _email = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _email.dispose();
-    super.dispose();
-  }
+  final ResetPasswordController controller = Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +60,7 @@ class _ForgetPasswordState extends State<ResetPassword> {
                 ),
                 const SizedBox(height: Sizes.largeSpace),
                 CustomTextField(
-                  controller: _email,
+                  controller: controller.email,
                   icon: const Icon(Icons.email_rounded),
                   type: TextInputType.emailAddress,
                   enableSuggestions: false,
@@ -83,7 +73,7 @@ class _ForgetPasswordState extends State<ResetPassword> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      final email = _email.text;
+                      final email = controller.email.text;
                       await AuthService.firebase().resetPassword(
                         email: email,
                       );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:healtech/core/asset_strings.dart';
 import 'package:healtech/core/sizes.dart';
+import 'package:healtech/presentation/controllers/auth/onboarding_controller.dart';
 import 'package:healtech/presentation/pages/auth/signup.dart';
 import 'package:healtech/presentation/pages/auth/widgets/dots_indicator.dart';
 import 'package:healtech/presentation/pages/auth/widgets/onboarding_content.dart';
@@ -14,20 +16,7 @@ class OnBoarding extends StatefulWidget {
 }
 
 class OnBoardingState extends State<OnBoarding> {
-  late final PageController _page;
-  bool isLastPage = false;
-
-  @override
-  void initState() {
-    _page = PageController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _page.dispose();
-    super.dispose();
-  }
+  final OnBoardingController controller = Get.put(OnBoardingController());
 
   void _onIntroEnd(context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,7 +37,7 @@ class OnBoardingState extends State<OnBoarding> {
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 12.0),
           child: PageView(
-            controller: _page,
+            controller: controller.page,
             children: [
               OnBoardingContent(
                 title: content[0].title,
@@ -105,7 +94,7 @@ class OnBoardingState extends State<OnBoarding> {
           ),
         ),
       ),
-      bottomSheet: DotIndicator(page: _page),
+      bottomSheet: DotIndicator(page: controller.page),
     );
   }
 }

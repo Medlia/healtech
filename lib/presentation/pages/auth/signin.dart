@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:healtech/core/routes.dart';
 import 'package:healtech/core/sizes.dart';
+import 'package:healtech/presentation/controllers/auth/sign_in_controller.dart';
 import 'package:healtech/service/auth/auth_exceptions.dart';
 import 'package:healtech/service/auth/auth_service.dart';
 import 'package:healtech/presentation/pages/auth/widgets/custom_textfield.dart';
@@ -14,22 +16,7 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
-  late final TextEditingController _email;
-  late final TextEditingController _password;
-
-  @override
-  void initState() {
-    _email = TextEditingController();
-    _password = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _email.dispose();
-    _password.dispose();
-    super.dispose();
-  }
+  final SignInController controller = Get.put(SignInController());
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +62,7 @@ class _SigninState extends State<Signin> {
                 ),
                 const SizedBox(height: Sizes.largeSpace),
                 CustomTextField(
-                  controller: _email,
+                  controller: controller.email,
                   icon: const Icon(Icons.email_rounded),
                   type: TextInputType.emailAddress,
                   enableSuggestions: false,
@@ -85,7 +72,7 @@ class _SigninState extends State<Signin> {
                 ),
                 const SizedBox(height: Sizes.tileSpace),
                 CustomTextField(
-                  controller: _password,
+                  controller: controller.password,
                   icon: const Icon(Icons.lock_rounded),
                   type: TextInputType.text,
                   enableSuggestions: false,
@@ -99,8 +86,8 @@ class _SigninState extends State<Signin> {
                   width: Sizes.buttonWidth,
                   child: FilledButton(
                     onPressed: () async {
-                      final email = _email.text;
-                      final password = _password.text;
+                      final email = controller.email.text;
+                      final password = controller.password.text;
                       try {
                         await AuthService.firebase().signIn(
                           email: email,

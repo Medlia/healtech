@@ -4,5 +4,6 @@
     "cSpell.words": [
         "analyzereports",
         "resetpassword"
-    ]
+    ],
+    "cmake.ignoreCMakeListsMissing": true
 }

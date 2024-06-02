@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:healtech/core/routes.dart';
 import 'package:healtech/presentation/pages/auth/onboarding.dart';
 import 'package:healtech/presentation/providers/theme_provider.dart';
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).theme,
